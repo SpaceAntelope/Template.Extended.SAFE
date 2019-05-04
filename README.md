@@ -15,7 +15,7 @@ TO DO: Guide to adding a new page
 Out of the box, the contents of the Bulma navigation bar simply disappeared on narrower viewports. I added the hamburger button and updated the MVU to allow for the expected responsive functionality.
 
 ## Footer
-A slim footer at the bottom of the page that also works as a host for status notifications. 
+A slim footer at the bottom of the root page that also works as a host for status notifications. 
 
 ## Page loader functionality
 The Fulma page loader needed some not immediately obvious steps (well to me anyway...) to get it to work, such as updating the .sass, available here for your convenience. 
