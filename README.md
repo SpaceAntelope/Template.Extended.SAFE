@@ -34,5 +34,7 @@ I have definitely not tested this template for production readiness, and very de
 
 Also, despite updating the template for access to the newer react features, I have absolutely not done any work towards actually using them for optimization. 
 
+Finally, you won't find anything here with regards to data access or dapper usage. 
+
 
 
