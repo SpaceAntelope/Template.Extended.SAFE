@@ -25,9 +25,9 @@ The activity indicator is implemented as a globally available message, i.e. that
 ## Sub page friendly structure
 A file tree geared towards an SPA sectioned along pages that appear as the content of a root page that itself implements any navigation, activity indicator, status messaging and other globally available functionality.
 
-The MVU pattern of each page is separated in Type/State/View files with an optional Data.fs, a structure I saw in https://github.com/MangelMaxime/fulma-demo and which I am finding increasingly convenient, in both Fable and Fabulous. 
+The MVU pattern of each page is separated in Type/State/View files with an optional Data.fs, a structure I saw in https://github.com/MangelMaxime/fulma-demo and which I am finding increasingly convenient, in both Fable and Fabulous. I also have this repo to thank for showing proper use of the bulma page loader in fulma. 
 
-Note that the *fulma-demo* project also uses an updated version of the fable references, so if this repo doesn't end up working out for you as far as that aspect goes, take a look there as well.
+Note that the *fulma-demo* project also uses an updated version of the fable references, so if this repo doesn't end up working out for you as far as that aspect goes, I encourage you take a look there as well.
 
 ## Caveat emptor
 I have definitely not tested this template for production readiness, and very definitely not in a cloud or a container. Which is to say that while the fable-elmish code patterns should be good to go anywhere, I have so far not investigated what breaks and what works in the various deployment scenarios that the official template provides for, as far as references and webpack packaging goes.
