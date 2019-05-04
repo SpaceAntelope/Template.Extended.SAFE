@@ -9,6 +9,8 @@ Updated client references to fable-compiler 2.2 as per https://fable.io/blog/Ann
 ## Navigation
 Use the url bar as input to your application, allowing you to directly navigate to a specific subsections of your Fable SPA, while updating browser history thus enabling use of the browser back and forward buttons for navigation. Also implemented a graceful fallback message for bad urls.
 
+This covers hashbang navigation, i.e. links that point at various places in your SPA.
+
 TO DO: Guide to adding a new page
 
 ## Properly responsive navbar
