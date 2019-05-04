@@ -30,7 +30,7 @@ The MVU pattern of each page is separated in Type/State/View files with an optio
 Note that the *fulma-demo* project also uses an updated version of the fable references, so if this repo doesn't end up working out for you as far as that aspect goes, I encourage you take a look there as well.
 
 ## Caveat emptor
-I have definitely not tested this template for production readiness, and very definitely not in a cloud or a container. Which is to say that while the fable-elmish code patterns should be good to go anywhere, I have so far not investigated what breaks and what works in the various deployment scenarios that the official template provides for, as far as references and webpack packaging goes.
+I have definitely not tested this template for production readiness, and very definitely not in a cloud or a container. Which is to say that while the fable-elmish code patterns should be good to go anywhere, I have so far not investigated what breaks and what works in the various deployment scenarios that the official template provides for, as far as referencial sturdiness and webpack packaging goes.
 
 Also, despite updating the template for access to the newer react features, I have absolutely not done any work towards actually using them for optimization. 
 
