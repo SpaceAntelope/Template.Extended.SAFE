@@ -14,6 +14,11 @@ module Types =
     | Notify of NotificationText
     | ToggleBusy of message:string option
 
+module TypeHelpers =
+    open Types
+    let BusyWithMsg = Some >> ToggleBusy
+    let NotBusyMsg = None |> ToggleBusy
+
 
 module Data =
     // pattern from https://fable.io/blog/Announcing-2-2.html -> #Fable.PowerPack

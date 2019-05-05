@@ -7,8 +7,6 @@ module View =
     open Fulma
     open Types
 
-
-
     let root (model : Model) (dispatch : Msg -> unit) =
         Column.column
             [   //Column.Width (Screen.All, Column.Is6)

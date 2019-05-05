@@ -5,22 +5,18 @@ module State =
     open Browser
     open YourNamespace.Common.Types
     open YourNamespace.Common.Data
+    open YourNamespace.Common.TypeHelpers
     open Types
-
-
-    let BusyWithMsg = Some >> YourNamespace.Common.Types.ToggleBusy >> GlobalMsg
-    let NotBusyMsg = None |> (YourNamespace.Common.Types.ToggleBusy >> GlobalMsg)
 
     let defaultModel =
         { Data = None }
 
     let init() =
         defaultModel,
-        Cmd.batch [
-            Cmd.ofMsg (BusyWithMsg "Loading data list...");
-            Cmd.ofMsg LoadData ]
+        Cmd.ofMsg LoadData,
+        Cmd.ofMsg (BusyWithMsg "Loading data list...")
 
-    let update (msg : Msg) (model : Model) : Model * Cmd<Msg> =
+    let update (msg : Msg) (model : Model) : Model * Cmd<Msg> * Cmd<YourNamespace.Common.Types.Msg> =
         match msg with
         | LoadData ->
             let cmd =
@@ -28,26 +24,30 @@ module State =
                     Data.fetchRemoteDataIndex
                     []
                     (DataLoaded)
-                    (YourNamespace.Common.Types.Msg.PromiseFailed >> GlobalMsg)
+                    (UnexpectedError)
 
-            model, cmd
+            model, cmd, Cmd.none
+
+        | UnexpectedError err ->
+            model, Cmd.none, Cmd.ofMsg (YourNamespace.Common.Types.Msg.PromiseFailed err)
 
         | DataLoaded (Ok sources) ->
             Dom.console.log(sources)
             match sources with
             | [] ->
-                { model with Data = None }, Cmd.ofMsg NotBusyMsg
+                { model with Data = None }, Cmd.none, Cmd.ofMsg NotBusyMsg
             | data ->
-                { model with Data = Some data }, Cmd.ofMsg NotBusyMsg
+                { model with Data = Some data }, Cmd.none, Cmd.ofMsg NotBusyMsg
 
         | DataLoaded (Error err) ->
             Dom.console.log(err)
             let cmd =
-                NotifyErrorMsg
+                NotificationText.Danger
+                >> YourNamespace.Common.Types.Notify
                 >> Cmd.ofMsg
                 <| err
 
-            model, Cmd.batch[cmd;Cmd.ofMsg NotBusyMsg]
+            model, Cmd.none, Cmd.batch[cmd;Cmd.ofMsg NotBusyMsg]
 
         | _ ->
-            model, Cmd.none
+            model, Cmd.none, Cmd.none

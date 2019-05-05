@@ -14,16 +14,4 @@ module Types =
     type Msg =
     | LoadData
     | DataLoaded of Result<IdxStr list, string>
-    | GlobalMsg of YourNamespace.Common.Types.Msg
-
-    let NotifyMsg =
-        YourNamespace.Common.Types.Notify
-        >> GlobalMsg
-
-    let NotifyErrorMsg =
-        NotificationText.Danger
-        >> NotifyMsg
-
-    let NotifyWarningMsg =
-        NotificationText.Warning
-        >> NotifyMsg
+    | UnexpectedError of exn

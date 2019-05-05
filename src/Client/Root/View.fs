@@ -1,5 +1,6 @@
 namespace YourNamespace.Root
 open Fulma
+open Fable.React.ReactiveComponents
 
 module View =
     open YourNamespace.Common.Types
@@ -26,23 +27,29 @@ module View =
 
 
     let PageNotFound =
-        Notification.notification
-            [   Notification.Color IsDanger ]
+        div
+            [ ClassName "animated bounceIn" ]
             [
-                Heading.h1
-                    [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Left)]]
-                    [   str "4"
-                        Icon.icon [ Icon.Size IsLarge  ][ Fa.i [Fa.Regular.Compass; Fa.Spin] [] ]
-                        str "4" ]
-                hr []
-                Heading.h4
-                    [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Right)]]
-                    [ str "Page not found"]
+                Notification.notification
+                    [   Notification.Color IsDanger; ]
+                    [
+                        Heading.h1
+                            [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Left)]]
+                            [   str "4"
+                                Icon.icon [ Icon.Size IsLarge  ][ Fa.i [Fa.Regular.Compass; Fa.Spin] [] ]
+                                str "4" ]
+                        hr []
+                        Heading.h4
+                            [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Right)]]
+                            [ str "Page not found"]
+                    ]
             ]
 
     let SafeComponentLinks =
         p [ ]
-            [ strong [] [ str "SAFE Template" ]
+            [ str "A "
+              a [ Href "https://safe-stack.github.io/"]
+                [ strong [] [ str "SAFE Template" ] ]
               str " extended by "
               a [ Href "https://areslazarus.com"] [ str "Ares Lazarus" ] ]
 

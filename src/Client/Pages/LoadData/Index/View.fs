@@ -33,9 +33,9 @@ module View =
                 Column.Width (Screen.All, Column.IsNarrow) ]
             [   match model.Data with
                 | Some [] ->
-                    yield div [] []
+                    yield div [] [str "Data not available"]
                 | Some data ->
                     yield Table data
                 | None ->
-                    yield div [] [str "Data not available"]
+                    yield div [] []
             ]

@@ -12,16 +12,4 @@ module Types =
     type Msg =
     | LoadData of index:int
     | DataLoaded of Result<RemoteData, string>
-    | GlobalMsg of YourNamespace.Common.Types.Msg
-
-    let NotifyMsg =
-        YourNamespace.Common.Types.Notify
-        >> GlobalMsg
-
-    let NotifyErrorMsg =
-        NotificationText.Danger
-        >> NotifyMsg
-
-    let NotifyWarningMsg =
-        NotificationText.Warning
-        >> NotifyMsg
+    | UnexpectedError of exn

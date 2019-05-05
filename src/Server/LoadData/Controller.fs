@@ -14,14 +14,17 @@ module Controller =
     let indexAction (ctx : HttpContext) =
         task {
             // Dramatic pause
-            //do! Task.Delay(2500)
+            do! Task.Delay(2500)
             // match (rnd.Next() % 4) with
             // | 0 ->
             //     return raise
             //            <| Exception
             //                   ("This operation fails randomly 25% of the time, all the time.")
+
             // | _ -> return! Repository.FetchAll ""
-            return! Repository.FetchAll "" }
+            return! Repository.FetchAll ""
+        }
+
     let showAction (ctx : HttpContext) (itemId : int) =
         task { return! Repository.FetchById itemId }
 
