@@ -26,6 +26,6 @@ module View =
                             CharSet "utf-8"
                             Src "https://platform.twitter.com/widgets.js"]
                         []
-                | sources ->
+                | _ ->
                     yield div [] []
             ]

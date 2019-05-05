@@ -41,24 +41,10 @@ module View =
             ]
 
     let SafeComponentLinks =
-        let components =
-            span [ ]
-               [
-                 a [ Href "https://saturnframework.github.io" ] [ str "Saturn" ]
-                 str ", "
-                 a [ Href "http://fable.io" ] [ str "Fable" ]
-                 str ", "
-                 a [ Href "https://elmish.github.io/elmish/" ] [ str "Elmish" ]
-                 str ", "
-                 a [ Href "https://fulma.github.io/Fulma" ] [ str "Fulma" ]
-                 str ", "
-                 a [ Href "https://dansup.github.io/bulma-templates/" ] [ str "Bulma\u00A0Templates" ]
-               ]
-
         p [ ]
             [ strong [] [ str "SAFE Template" ]
-              str " powered by: "
-              components ]
+              str " extended by "
+              a [ Href "https://areslazarus.com"] [ str "Ares Lazarus" ] ]
 
     let navBrand isBurgerOpen dispatch =
         Navbar.Brand.div [ ]
@@ -96,7 +82,7 @@ module View =
                 [ Button.Color IsWhite
                   Button.IsOutlined
                   Button.Size IsSmall
-                  Button.Props [ Href "https://github.com/SAFE-Stack/SAFE-template" ] ]
+                  Button.Props [ Href "https://github.com/SpaceAntelope/Template.Extended.SAFE" ] ]
                 [ Icon.icon [ ]
                     [ Fa.i [Fa.Brand.Github] [] ]
                   span [ ] [ str "View Source" ] ] ] ]
