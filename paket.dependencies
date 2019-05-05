@@ -1,0 +1,59 @@
+group Server
+    source https://api.nuget.org/v3/index.json
+    framework: netcoreapp2.2
+    storage: none
+
+    nuget FSharp.Core
+    nuget Saturn
+    nuget Thoth.Json.Giraffe
+
+group Client
+    source https://api.nuget.org/v3/index.json
+    framework: netstandard2.0
+    storage: none
+
+    # nuget Fable.Core ~> 2
+    # nuget Fable.Elmish ~> 2
+    # nuget Fable.Elmish.Debugger ~> 2
+    # nuget Fable.Elmish.React ~> 2
+    # nuget Fable.Elmish.HMR ~> 2
+    # nuget Fable.React ~> 4
+    # nuget Fulma
+    # nuget Fable.FontAwesome.Free
+    nuget FSharp.Core
+    nuget Fable.Core
+    nuget Fable.Elmish
+    nuget Fable.Elmish.React
+    nuget Fable.Elmish.Browser
+    nuget Fable.Elmish.Debugger
+    nuget Fable.Elmish.HMR
+    nuget Fable.React
+    nuget Fable.Promise
+    nuget Fable.Fetch
+    nuget Fulma
+    nuget Fulma.Extensions.Wikiki.PageLoader
+    nuget Fable.FontAwesome.Free
+    nuget Thoth.Json
+
+group Build
+    source https://api.nuget.org/v3/index.json
+    framework: netstandard2.0
+    storage: none
+    #source https://www.nuget.org/api/v2
+
+    # nuget FSharp.Core
+    # nuget Fake.Core.Target
+    # nuget Fake.DotNet.Cli
+    # nuget Fake.IO.FileSystem
+    nuget FSharp.Core
+
+    nuget NETStandard.Library.NETFramework
+    nuget Fake.DotNet.Cli
+    nuget Fake.DotNet.Paket
+    nuget Fake.Core.Target
+    nuget Fake.Core.Process
+    nuget Fake.Core.String
+    nuget Fake.Core.ReleaseNotes
+    nuget Fake.IO.FileSystem
+    nuget Fake.Tools.Git
+    nuget Fake.JavaScript.Yarn

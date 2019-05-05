@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Shared/Shared.fs" />
+    <Compile Include="Common/Common.fs" />
+    <Compile Include="Common/Router.fs" />
+    <Compile Include="Counter/Types.fs" />
+    <Compile Include="Counter/Data.fs" />
+    <Compile Include="Counter/State.fs" />
+    <Compile Include="Counter/View.fs" />
+    <Compile Include="LoadData/Index/Types.fs" />
+    <Compile Include="LoadData/Index/Data.fs" />
+    <Compile Include="LoadData/Index/State.fs" />
+    <Compile Include="LoadData/Index/View.fs" />
+    <Compile Include="LoadData/Show/Types.fs" />
+    <Compile Include="LoadData/Show/Data.fs" />
+    <Compile Include="LoadData/Show/State.fs" />
+    <Compile Include="LoadData/Show/View.fs" />
+    <Compile Include="LoadData/Types.fs" />
+    <Compile Include="LoadData/Data.fs" />
+    <Compile Include="LoadData/State.fs" />
+    <Compile Include="LoadData/View.fs" />
+    <Compile Include="Root/Types.fs" />
+    <Compile Include="Root/Data.fs" />
+    <Compile Include="Root/State.fs" />
+    <Compile Include="Root/View.fs" />
+    <Compile Include="Client.fs" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>
