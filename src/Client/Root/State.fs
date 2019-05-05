@@ -41,8 +41,11 @@ module State =
                     { model with CounterModel = Some model' }, Cmd.map CounterMsg cmd
 
                 | Page.LoadData subPage ->
-                    let (model', cmd) = YourNamespace.LoadData.State.init subPage
-                    { model with LoadDataModel = Some model'}, Cmd.map LoadDataMsg cmd
+                    let (model', cmd, globalCmd) = YourNamespace.LoadData.State.init subPage
+                    { model with LoadDataModel = Some model'},
+                        Cmd.batch [
+                            Cmd.map LoadDataMsg cmd
+                            Cmd.map GlobalMsg globalCmd]
 
                 | _ -> model, Cmd.none
 
@@ -80,12 +83,12 @@ module State =
 
         | LoadDataMsg dataMsg ->
             match dataMsg, model.LoadDataModel with
-            | YourNamespace.LoadData.Types.Msg.GlobalMsg globalMsg, _ ->
-                model, Cmd.ofMsg (GlobalMsg globalMsg)
-
             | _, Some dataModel ->
-                let (model', cmd) = YourNamespace.LoadData.State.update dataMsg dataModel
-                { model with LoadDataModel = Some model'}, Cmd.map LoadDataMsg cmd
+                let (model', cmd, globalCmd) = YourNamespace.LoadData.State.update dataMsg dataModel
+                { model with LoadDataModel = Some model'},
+                    Cmd.batch [
+                        Cmd.map LoadDataMsg cmd
+                        Cmd.map GlobalMsg globalCmd]
 
             | _ ->
                 Dom.console.error("Received msg", msg, "but SourceModel is None")
