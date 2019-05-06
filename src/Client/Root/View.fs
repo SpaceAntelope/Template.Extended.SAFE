@@ -146,6 +146,12 @@ module View =
             Notification.notification [ slimStyle;Notification.Color IsSuccess ] (content text)
 
 
+    let inline refContainer (element : Browser.Types.Element) =
+        if not <| isNull element
+        then
+            element.classList.add("animated")
+            element.classList.add("fadeIn")
+
     let view (model : Model) (dispatch : Msg -> unit) =
         Hero.hero [ Hero.Color IsPrimary; Hero.IsFullHeight ]
             [ Hero.head [ ]
@@ -157,8 +163,8 @@ module View =
               Hero.body [ ]
                 [
                     Container.container
-                        [ 
-                            //Container.Props [ClassName "animated fadeIn"]
+                        [
+                            //Container.Props [ Ref refContainer ] //; classList  ["animated",true;"fadeIn", true]]
                             Container.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
                         [
                             yield LoaderView model.BusyMessage
@@ -171,13 +177,13 @@ module View =
                             | { CurrentPage = Router.LoadData _
                                 LoadDataModel = Some dataModel } ->
                                     yield YourNamespace.LoadData.View.root dataModel (dispatch<<LoadDataMsg)
-                            
-                            | { CurrentPage = Router.Home 
+
+                            | { CurrentPage = Router.About
                                 HomeModel = Some homeModel } ->
                                     yield YourNamespace.Home.View.root homeModel (dispatch<<HomeMsg)
                                     //yield div [] [str "Here's Home!"]
-                            
-                            | { CurrentPage = Router.Missing(_) } -> 
+
+                            | { CurrentPage = Router.Missing(_) } ->
                                     yield PageNotFound
                         ]
                 ]

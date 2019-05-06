@@ -56,7 +56,7 @@ module State =
                             Cmd.map LoadDataMsg cmd
                             Cmd.map GlobalMsg globalCmd]
 
-                | Page.Home ->
+                | About ->
                     let (model', cmd) = YourNamespace.Home.State.init()
                     { model with HomeModel = Some model'}, Cmd.map HomeMsg cmd
 
@@ -110,7 +110,7 @@ module State =
             match homeMsg, model.HomeModel with
             | _, Some homeModel ->
                 let (model', cmd, globalCmd) = YourNamespace.Home.State.update homeMsg homeModel
-                { model with HomeModel = Some model'}, 
+                { model with HomeModel = Some model'},
                     Cmd.batch [
                         Cmd.map HomeMsg cmd
                         Cmd.map GlobalMsg globalCmd]

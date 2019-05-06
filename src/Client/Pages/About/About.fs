@@ -27,7 +27,7 @@ module Types =
 module Data =
     open Fetch
 
-    let fetchReadme =                
+    let fetchReadme =
         promise {
             let! response = fetch "api/readme" []
             let! text = response.text()
@@ -44,12 +44,12 @@ module State =
 
     [<Emit("new FileReader()")>]
     let getReader() : FileReader = Util.jsNative
-    
+
     let update msg model =
         match msg with
         | LoadData ->
-            let cmd = 
-                Cmd.OfPromise.either 
+            let cmd =
+                Cmd.OfPromise.either
                     (fun _ -> Data.fetchReadme)
                     []
                     (DataLoaded)
@@ -77,28 +77,39 @@ module View =
           [ Column.Width (Screen.All, Column.Is8)
             Column.Offset (Screen.All, Column.Is2) ]
           [
-            script [ Src "https://cdn.jsdelivr.net/npm/marked/marked.min.js" ] []
-            
-            Card.card [ Props [ Style [ BorderRadius 10 ] ] ]
+            //script [ Src "https://cdn.jsdelivr.net/npm/marked/marked.min.js" ] []
+
+            Card.card [ Props [ Style [ BorderRadius 10] ] ]
                 [ Card.header [ ]
                     [ Card.Header.title [ ]
                         [ str "README.md" ]
                       Card.Header.icon [ ]
                         [ Fa.i [ Fa.Brand.Github ] [] ] // ClassName "fa fa-angle-down" ] [ ] ] ]
                     ]
-                  Card.content [ Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Justified)] ]
-                    [ Content.content 
-                        [ Content.Props 
-                            [ Ref (fun element ->
-                                        if not (isNull element) && not (isNull model.Data)
-                                        then element.innerHTML <- marked model.Data ) ] ] 
-                        [ ] 
+                  Card.content
+                    [
+                        Modifiers
+                            [   Modifier.TextAlignment (Screen.All, TextAlignment.Justified)
+                                Modifier.IsPaddingless ]
                     ]
-                //   Card.footer [ ]
-                //     [ Card.Footer.a 
-                //         [ Href "https://github.com/SpaceAntelope/Template.Extended.SAFE/blob/master/README.md" ]
-                //         [ str "https://github.com/SpaceAntelope/Template.Extended.SAFE/blob/master/README.md" ]
-                      
-                //         ]
+                    [ Content.content
+                        [
+                          Content.Modifiers [Modifier.BackgroundColor Color.IsLight]
+                          Content.Props
+                            [ Style [Height "80%"; MaxHeight 400.; Overflow "auto"; Padding 7.5 ]
+                              Ref (fun element ->
+                                        if not (isNull element) && not (isNull model.Data)
+                                        then
+                                            element.innerHTML <- marked model.Data
+                                             )
+                            ] ]
+                        [ ]
+                    ]
+                  Card.footer [ ]
+                    [ Card.Footer.a
+                        [ Props [Href "https://github.com/SpaceAntelope/Template.Extended.SAFE/blob/master/README.md" ] ]
+                        [ strong [ Style [Color IsLink] ] [ str "source" ] ]
+
+                        ]
                 ]
-          ]   
+          ]

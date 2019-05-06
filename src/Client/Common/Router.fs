@@ -17,21 +17,20 @@ module Router =
         | Show of int
 
     type Page =
-        | Home
+        | About
         | Counter
         | LoadData of Subsection
         | Missing of ErrorPage
 
     let MainMenuLinks =
-        [   Home, "Home"
-            Counter, "The Counter"
+        [   Counter, "The Counter"
             LoadData(Index), "A Data Page"
-            Missing(ErrorPage.NotFound404), "A Missing Page" ]
+            Missing(ErrorPage.NotFound404), "A Missing Page"
+            About, "About" ]
 
     let private toHashRoute page =
-        // Note Missing page is not matched, i.e. it's not meant to be accessible via url
         match page with
-        | Home -> "#"
+        | About -> "#readme"
         | Counter -> "#counter"
         | LoadData page ->
             match page with
@@ -44,12 +43,12 @@ module Router =
             map (Subsection.Index |> LoadData) (s "subsection" </> s "index")
             map (Subsection.Show >> LoadData) (s "subsection" </> s "show" </> i32)
             map (NotFound404 |> Missing) (s "this is an obviously dodgy url")
-            map Counter (s "counter")            
-            map Home top ]
+            map (About) (s "readme")
+            map Counter (s "counter")
+            map Counter top ]
 
     let modifyLocation page = Dom.window.location.href <- toHashRoute page
 
     let modifyUrl page = page |> toHashRoute |> Navigation.modifyUrl
 
-    //
     let href = Href<<toHashRoute
