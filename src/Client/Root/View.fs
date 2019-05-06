@@ -1,11 +1,10 @@
 namespace YourNamespace.Root
 
-
 module View =
     open YourNamespace.Common.Types
     open Fulma.Extensions.Wikiki
     open YourNamespace.Root.Types
-    open YourNamespace.Common.Router
+    open YourNamespace.Common
     open Fulma
     open Fable.React
     open Fable.React.Props
@@ -68,18 +67,15 @@ module View =
                           span [ ] [ ] ]
             ]
 
-    let NavbarItems (pages : (Page * string) list) =
+    let NavbarItems (pages : (Router.Page * string) list) =
         [ for page, title in pages do
               yield  Navbar.Item.a
                           [ Navbar.Item.Props
-                                [ OnClick(fun _ -> modifyLocation page) ] ]
+                                [ OnClick(fun _ -> Router.modifyLocation page) ] ]
                           [ ofString title ] ]
 
     let NavbarPageLinks =
-        [   Home, "Home"
-            Counter, "The Counter"
-            LoadData(Index), "A Data Page"
-            Missing, "A Missing Page" ]
+        Router.MainMenuLinks
         |> NavbarItems
 
     let NavbarDefaultLinks =
@@ -150,9 +146,6 @@ module View =
             Notification.notification [ slimStyle;Notification.Color IsSuccess ] (content text)
 
 
-
-
-
     let view (model : Model) (dispatch : Msg -> unit) =
         Hero.hero [ Hero.Color IsPrimary; Hero.IsFullHeight ]
             [ Hero.head [ ]
@@ -164,21 +157,28 @@ module View =
               Hero.body [ ]
                 [
                     Container.container
-                        [ Container.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
+                        [ 
+                            //Container.Props [ClassName "animated fadeIn"]
+                            Container.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
                         [
                             yield LoaderView model.BusyMessage
 
                             match model with
-                            | { CurrentPage = Counter
+                            | { CurrentPage = Router.Counter
                                 CounterModel = Some counterModel } ->
                                     yield YourNamespace.Counter.View.view counterModel (dispatch<<CounterMsg)
 
-                            | { CurrentPage = LoadData _
+                            | { CurrentPage = Router.LoadData _
                                 LoadDataModel = Some dataModel } ->
                                     yield YourNamespace.LoadData.View.root dataModel (dispatch<<LoadDataMsg)
-                            | { CurrentPage = Home } ->
-                                    yield div [] [str "Here's Home!"]
-                            | _ -> yield PageNotFound
+                            
+                            | { CurrentPage = Router.Home 
+                                HomeModel = Some homeModel } ->
+                                    yield YourNamespace.Home.View.root homeModel (dispatch<<HomeMsg)
+                                    //yield div [] [str "Here's Home!"]
+                            
+                            | { CurrentPage = Router.Missing(_) } -> 
+                                    yield PageNotFound
                         ]
                 ]
 

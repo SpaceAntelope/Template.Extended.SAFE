@@ -30,7 +30,8 @@ module State =
 
             Dom.console.error(errMessage)
 
-            { model with Message = NotificationText.Warning errMessage }, Cmd.none//, modifyUrl model.CurrentPage
+            //{ model with Message = NotificationText.Warning errMessage }, Cmd.none//, modifyUrl model.CurrentPage
+            { model with CurrentPage = Missing(NotFound404) }, Cmd.none//, modifyUrl model.CurrentPage
 
         | Some page ->
             let model = { model with CurrentPage = page }

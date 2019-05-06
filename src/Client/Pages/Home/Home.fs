@@ -6,9 +6,11 @@ open Elmish
 open Browser
 open Fulma
 open Fable.React.ReactiveComponents
-open Fable.Core
+
 open Fable.React
 open Browser.Types
+
+
 
 module Types =
 
@@ -24,7 +26,7 @@ module State =
 
     let init() = { Data = "" }, Cmd.ofMsg LoadData
 
-    [<Emit("marked('$0')")>]
+    [<Emit("marked($0)")>]
     let marked (text:string) : string = Util.jsNative
 
     [<Emit("new FileReader()")>]
@@ -46,27 +48,36 @@ module State =
             element.innerHTML <- text
             { model with Data = text }, Cmd.none
 
-// module View =
+module View =
+    open Fable.Core
+    open Fable.React
+    open Fulma
+    open Fable.React.Props
+    open Fable.FontAwesome
 
-
-//     let root model dispatch =
-//         [
-//             script [ Src "https://cdn.jsdelivr.net/npm/marked/marked.min.js" ] []
-//             Card.card [ ]
-//                 [ Card.header [ ]
-//                     [ Card.Header.title [ ]
-//                         [ str "README.md" ]
-//                       Card.Header.icon [ ]
-//                         [ Fa.i [ Fa.Solid.AngleDown ] [] ] ] // ClassName "fa fa-angle-down" ] [ ] ] ]
-//                   Card.content [ ]
-//                     [ Content.content [ Id "ReadMeContent" ]
-//                         [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
-//                 //   Card.footer [ ]
-//                 //     [ Card.Footer.a [ ]
-//                 //         [ str "Save" ]
-//                 //       Card.Footer.a [ ]
-//                 //         [ str "Edit" ]
-//                 //       Card.Footer.a [ ]
-//                 //         [ str "Delete" ] ]
-//                 ]
-//         ]
+    let root model dispatch =
+        Column.column
+          [ Column.Width (Screen.All, Column.Is6)
+            Column.Offset (Screen.All, Column.Is3) ]
+          [
+            script [ Src "https://cdn.jsdelivr.net/npm/marked/marked.min.js" ] []
+            
+            Card.card [ Props [ Style [ BorderRadius 10 ] ] ]
+                [ Card.header [ ]
+                    [ Card.Header.title [ ]
+                        [ str "README.md" ]
+                      Card.Header.icon [ ]
+                        [ Fa.i [ Fa.Solid.AngleDown ] [] ] // ClassName "fa fa-angle-down" ] [ ] ] ]
+                    ]
+                  Card.content [ ]
+                    [ Content.content [ Content.Props [Id "ReadMeContent" ]]
+                        [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
+                //   Card.footer [ ]
+                //     [ Card.Footer.a [ ]
+                //         [ str "Save" ]
+                //       Card.Footer.a [ ]
+                //         [ str "Edit" ]
+                //       Card.Footer.a [ ]
+                //         [ str "Delete" ] ]
+                ]
+          ]   

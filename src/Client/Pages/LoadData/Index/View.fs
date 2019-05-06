@@ -4,6 +4,7 @@ module View =
     open Fable.FontAwesome
     open YourNamespace.Common.Router
     open Fable.React
+    open Fable.React.Props
     open Fulma
     open Types
 
@@ -20,12 +21,15 @@ module View =
             ]
 
     let inline Table(items : IdxStr list) =
-        Table.table
-            [ Table.IsHoverable ]
-            [   thead []
-                    [ tr []
-                         [ th [] [ str "Choose an item to expand" ] ] ]
-                tbody [] (List.map Row items) ]
+        //div [ ClassName "animated fadeIn" ]
+        //    [
+                Table.table
+                    [ Table.IsHoverable ]
+                    [   thead []
+                            [ tr []
+                                 [ th [] [ str "Choose an item to expand" ] ] ]
+                        tbody [] (List.map Row items) ]
+        //    ]
 
     let root (model : Model) (dispatch : Msg -> unit) =
         Column.column

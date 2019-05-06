@@ -14,7 +14,7 @@ module State =
     let init() =
         defaultModel,
         Cmd.ofMsg LoadData,
-        Cmd.ofMsg (BusyWithMsg "Loading data list...")
+        Cmd.ofMsg (BusyWithMsg "Slowly loading data list...")
 
     let update (msg : Msg) (model : Model) : Model * Cmd<Msg> * Cmd<YourNamespace.Common.Types.Msg> =
         match msg with
