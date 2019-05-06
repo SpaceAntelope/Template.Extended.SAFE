@@ -66,9 +66,6 @@ module State =
 
 
 module View =
-    open Fable.Core
-    open Fable.React
-    open Fulma
     open Fable.React.Props
     open Fable.FontAwesome
 
@@ -98,11 +95,10 @@ module View =
                         [ ] 
                     ]
                 //   Card.footer [ ]
-                //     [ Card.Footer.a [ ]
-                //         [ str "Save" ]
-                //       Card.Footer.a [ ]
-                //         [ str "Edit" ]
-                //       Card.Footer.a [ ]
-                //         [ str "Delete" ] ]
+                //     [ Card.Footer.a 
+                //         [ Href "https://github.com/SpaceAntelope/Template.Extended.SAFE/blob/master/README.md" ]
+                //         [ str "https://github.com/SpaceAntelope/Template.Extended.SAFE/blob/master/README.md" ]
+                      
+                //         ]
                 ]
           ]   
