@@ -29,6 +29,13 @@ module Server =
 
     let webApp =
         router {
+            get "/api/readme" 
+                (fun next ctx -> 
+                    task {
+                        let text = File.ReadAllText("../../README.md").Replace("\r\n","\n")
+                        return! json text next ctx
+                    })
+
             get "/api/init"
                 (fun next ctx -> task { let! counter = getInitCounter()
                                         return! json counter next ctx })

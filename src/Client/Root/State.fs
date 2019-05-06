@@ -109,8 +109,11 @@ module State =
         | HomeMsg homeMsg ->
             match homeMsg, model.HomeModel with
             | _, Some homeModel ->
-                let (model', cmd) = YourNamespace.Home.State.update homeMsg homeModel
-                { model with HomeModel = Some model'}, Cmd.map HomeMsg cmd
+                let (model', cmd, globalCmd) = YourNamespace.Home.State.update homeMsg homeModel
+                { model with HomeModel = Some model'}, 
+                    Cmd.batch [
+                        Cmd.map HomeMsg cmd
+                        Cmd.map GlobalMsg globalCmd]
 
             | _ ->
                 Dom.console.error("Received msg", msg, "but HomeModel is None")

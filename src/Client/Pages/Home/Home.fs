@@ -9,6 +9,8 @@ open Fable.React.ReactiveComponents
 
 open Fable.React
 open Browser.Types
+open Fable.Import
+open Fable.Import.RemoteDev
 
 
 
@@ -20,9 +22,20 @@ module Types =
     type Msg =
         | LoadData
         | DataLoaded of string
+        | UnexpectedError of exn
 
+module Data =
+    open Fetch
+
+    let fetchReadme =                
+        promise {
+            let! response = fetch "api/readme" []
+            let! text = response.text()
+            return text
+        } |> Promise.catch (fun ex -> ex.Message)
 module State =
     open Types
+    open Fable.Core
 
     let init() = { Data = "" }, Cmd.ofMsg LoadData
 
@@ -31,22 +44,26 @@ module State =
 
     [<Emit("new FileReader()")>]
     let getReader() : FileReader = Util.jsNative
-
+    
     let update msg model =
         match msg with
         | LoadData ->
-            let fileName = "../../../README.md"
-            let readFile dispatch =
-                let reader = getReader()
-                reader.onload <- (fun e -> reader.result |> string |> marked |> DataLoaded |> dispatch )
-                reader.readAsText(unbox fileName)
+            let cmd = 
+                Cmd.OfPromise.either 
+                    (fun _ -> Data.fetchReadme)
+                    []
+                    (DataLoaded)
+                    (UnexpectedError)
 
-            model, Cmd.ofSub readFile
+            model, cmd, Cmd.none
 
         | DataLoaded text ->
-            let element = Dom.document.getElementById("ReadMeContent")
-            element.innerHTML <- text
-            { model with Data = text }, Cmd.none
+            let result = JS.JSON.parse(text) :?> string
+            { model with Data = marked result }, Cmd.none, Cmd.none
+
+        | UnexpectedError err ->
+            model, Cmd.none, Cmd.ofMsg (YourNamespace.Common.Types.Msg.PromiseFailed err)
+
 
 module View =
     open Fable.Core
@@ -55,10 +72,13 @@ module View =
     open Fable.React.Props
     open Fable.FontAwesome
 
-    let root model dispatch =
+    [<Emit("marked($0)")>]
+    let marked (text:string) : string = Util.jsNative
+
+    let root (model: Types.Model) dispatch =
         Column.column
-          [ Column.Width (Screen.All, Column.Is6)
-            Column.Offset (Screen.All, Column.Is3) ]
+          [ Column.Width (Screen.All, Column.Is8)
+            Column.Offset (Screen.All, Column.Is2) ]
           [
             script [ Src "https://cdn.jsdelivr.net/npm/marked/marked.min.js" ] []
             
@@ -67,11 +87,16 @@ module View =
                     [ Card.Header.title [ ]
                         [ str "README.md" ]
                       Card.Header.icon [ ]
-                        [ Fa.i [ Fa.Solid.AngleDown ] [] ] // ClassName "fa fa-angle-down" ] [ ] ] ]
+                        [ Fa.i [ Fa.Brand.Github ] [] ] // ClassName "fa fa-angle-down" ] [ ] ] ]
                     ]
-                  Card.content [ ]
-                    [ Content.content [ Content.Props [Id "ReadMeContent" ]]
-                        [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
+                  Card.content [ Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Justified)] ]
+                    [ Content.content 
+                        [ Content.Props 
+                            [ Ref (fun element ->
+                                        if not (isNull element) && not (isNull model.Data)
+                                        then element.innerHTML <- marked model.Data ) ] ] 
+                        [ ] 
+                    ]
                 //   Card.footer [ ]
                 //     [ Card.Footer.a [ ]
                 //         [ str "Save" ]
