@@ -20,7 +20,7 @@ module Router =
 
     let private toHashRoute page =
         match page with
-        | Home -> "#/"
+        | Home -> "#"
         | Counter -> "#counter"
         | LoadData page ->
             match page with

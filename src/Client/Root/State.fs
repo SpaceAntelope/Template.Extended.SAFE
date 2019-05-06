@@ -15,6 +15,7 @@ module State =
     let defaultModel = {
         CounterModel = None
         LoadDataModel = None
+        HomeModel = None
         BusyMessage = None
         Message = NotificationText.Info "Hello World! Here's a status message."
         CurrentPage = Counter
@@ -25,14 +26,21 @@ module State =
 
         match result with
         | None ->
-            Dom.console.error("Error parsing url: " + window.location.href)
+            let errMessage = window.location.href + " is not a valid url."
 
-            model, modifyUrl model.CurrentPage
+            Dom.console.error(errMessage)
+
+            { model with Message = NotificationText.Warning errMessage }, Cmd.none//, modifyUrl model.CurrentPage
 
         | Some page ->
             let model = { model with CurrentPage = page }
 
-            let collapsePageListCmd = Cmd.ofMsg <| ToggleBurger false
+            let collapsePageListCmd =
+                if model.IsBurgerOpen
+                then
+                    Cmd.ofMsg <| ToggleBurger false
+                else
+                    Cmd.none
 
             let (model', cmd) =
                 match page with
@@ -46,6 +54,10 @@ module State =
                         Cmd.batch [
                             Cmd.map LoadDataMsg cmd
                             Cmd.map GlobalMsg globalCmd]
+
+                | Page.Home ->
+                    let (model', cmd) = YourNamespace.Home.State.init()
+                    { model with HomeModel = Some model'}, Cmd.map HomeMsg cmd
 
                 | _ -> model, Cmd.none
 
@@ -89,10 +101,20 @@ module State =
                     Cmd.batch [
                         Cmd.map LoadDataMsg cmd
                         Cmd.map GlobalMsg globalCmd]
-
             | _ ->
                 Dom.console.error("Received msg", msg, "but SourceModel is None")
                 model, Cmd.none
+
+        | HomeMsg homeMsg ->
+            match homeMsg, model.HomeModel with
+            | _, Some homeModel ->
+                let (model', cmd) = YourNamespace.Home.State.update homeMsg homeModel
+                { model with HomeModel = Some model'}, Cmd.map HomeMsg cmd
+
+            | _ ->
+                Dom.console.error("Received msg", msg, "but HomeModel is None")
+                model, Cmd.none
+
 
         | ToggleBurger state ->
             { model with IsBurgerOpen = state }, Cmd.none

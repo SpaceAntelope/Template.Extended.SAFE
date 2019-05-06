@@ -1,6 +1,5 @@
 namespace YourNamespace.Root
-open Fulma
-open Fable.React.ReactiveComponents
+
 
 module View =
     open YourNamespace.Common.Types
@@ -62,7 +61,8 @@ module View =
                         Alt "Logo" ] ]
               Navbar.burger [ Fulma.Common.CustomClass (if isBurgerOpen then "is-active" else "")
                               Fulma.Common.Props [
-                                        OnClick (fun _ -> dispatch <| ToggleBurger (not isBurgerOpen)) ] ]
+                                    Style [ Color IsLight ]
+                                    OnClick (fun _ -> dispatch <| ToggleBurger (not isBurgerOpen)) ] ]
                         [ span [ ] [ ]
                           span [ ] [ ]
                           span [ ] [ ] ]
@@ -149,6 +149,10 @@ module View =
         | NotificationText.Success text ->
             Notification.notification [ slimStyle;Notification.Color IsSuccess ] (content text)
 
+
+
+
+
     let view (model : Model) (dispatch : Msg -> unit) =
         Hero.hero [ Hero.Color IsPrimary; Hero.IsFullHeight ]
             [ Hero.head [ ]
@@ -172,7 +176,8 @@ module View =
                             | { CurrentPage = LoadData _
                                 LoadDataModel = Some dataModel } ->
                                     yield YourNamespace.LoadData.View.root dataModel (dispatch<<LoadDataMsg)
-
+                            | { CurrentPage = Home } ->
+                                    yield div [] [str "Here's Home!"]
                             | _ -> yield PageNotFound
                         ]
                 ]

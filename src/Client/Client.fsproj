@@ -6,6 +6,7 @@
     <Compile Include="../Shared/Shared.fs" />
     <Compile Include="Common/Common.fs" />
     <Compile Include="Common/Router.fs" />
+    <Compile Include="Pages/Home/Home.fs" />
     <Compile Include="Pages/Counter/Types.fs" />
     <Compile Include="Pages/Counter/Data.fs" />
     <Compile Include="Pages/Counter/State.fs" />
