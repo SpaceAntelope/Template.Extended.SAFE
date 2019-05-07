@@ -40,7 +40,7 @@ module State =
 
     [<Emit("marked($0)")>]
     let marked (text:string) : string = Util.jsNative
-    
+
     let init() = { Data = "" }, Cmd.ofMsg LoadData
 
     let update msg model =
@@ -77,7 +77,7 @@ module View =
                 [ Card.header [ ]
                     [ Card.Header.title [ ]
                         [ str "README.md" ]
-                      Card.Header.icon [ ] 
+                      Card.Header.icon [ ]
                         [ Fa.i [ Fa.Brand.Github ] [] ]
                     ]
                   Card.content
@@ -97,7 +97,8 @@ module View =
                                             element.innerHTML <- model.Data
                                             Dom.console.info("[Ref]",element.classList)
                                             )
-                            ] ]
+                            ]
+                        ]
                         [ ]
                     ]
                   Card.footer [ ]

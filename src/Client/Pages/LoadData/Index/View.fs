@@ -1,4 +1,6 @@
 namespace YourNamespace.LoadData.Index
+open Fable.Import.RemoteDev
+open Fulma
 
 module View =
     open Fable.FontAwesome
@@ -13,10 +15,31 @@ module View =
             [ td
                 []
                 [
-                    Fa.i [ Fa.Brand.Twitter ] [ ]
                     Button.a
-                        [ Button.Props [ href (Page.LoadData(Show idx)) ]]
-                        [ str name ]
+                        [
+                            Button.Option.IsFullWidth
+                            Button.Props [ href (Page.LoadData(Show idx)) ]
+                        ]
+                        [
+                            div
+                                [
+                                    Style [
+                                        Display DisplayOptions.Flex
+                                        AlignItems AlignItemsOptions.Center
+                                        Width "100%"
+                                    ]]
+                                [
+                                    span
+                                        []
+                                        [str name]
+                                    span [Style [FlexGrow 1.]][]
+                                    Fa.i
+                                        [ Fa.Brand.Twitter
+                                          Fa.Props [ Style [Color "#1DA1F2"] ] ]
+                                        []
+                                ]
+
+                        ]
                 ]
             ]
 
@@ -24,10 +47,11 @@ module View =
         //div [ ClassName "animated fadeIn" ]
         //    [
                 Table.table
-                    [ Table.IsHoverable ]
+                    [   Table.IsHoverable
+                        Table.Props [Style [BorderRadius 15.]] ]
                     [   thead []
                             [ tr []
-                                 [ th [] [ str "Choose an item to expand" ] ] ]
+                                 [ th [] [ str "Choose a timeline to expand" ] ] ]
                         tbody [] (List.map Row items) ]
         //    ]
 

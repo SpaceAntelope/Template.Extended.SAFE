@@ -1,14 +1,15 @@
 namespace YourNamespace.Root
 
 module View =
+    open Browser.Types
     open YourNamespace.Common.Types
-    open YourNamespace.Common.View    
+    open YourNamespace.Common.View
     open YourNamespace.Root.Types
     open YourNamespace.Common
     open Fulma
     open Fable.React
     open Fable.React.Props
-    open Fable.FontAwesome    
+    open Fable.FontAwesome
 
     let SafeComponentLinks =
         p [ ]
@@ -34,16 +35,27 @@ module View =
                           span [ ] [ ] ]
             ]
 
-    let NavbarItems (pages : (Router.Page * string) list) =
+    let NavbarItems selectedPage (pages : (Router.Page * string) list) =
         [ for page, title in pages do
               yield  Navbar.Item.a
-                          [ Navbar.Item.Props
-                                [ OnClick(fun _ -> Router.modifyLocation page) ] ]
+                          [
+                              Navbar.Item.Props
+                                [
+                                    if selectedPage = page then
+                                        yield Style [ FontWeight "bold"; BorderBottom "solid #00B89C 2px"; PaddingBottom 5.]
+
+                                    yield OnClick(fun e ->
+                                        Router.modifyLocation page
+                                        //Dom.console.info("-----",e.target, e.currentTarget)
+                                        let el = e.currentTarget :?> Element
+                                        el.classList.add "is-outlined")
+
+                                ]]
                           [ ofString title ] ]
 
-    let NavbarPageLinks =
+    let NavbarPageLinks selectedPage =
         Router.MainMenuLinks
-        |> NavbarItems
+        |> NavbarItems selectedPage
 
     let NavbarDefaultLinks =
         [
@@ -57,12 +69,12 @@ module View =
                     [ Fa.i [Fa.Brand.Github] [] ]
                   span [ ] [ str "View Source" ] ] ] ]
 
-    let navMenu isBurgerOpen =
+    let navMenu selectedPage isBurgerOpen =
         Navbar.menu [ Navbar.Menu.IsActive isBurgerOpen ]
-            [ Navbar.End.div [ ] (NavbarPageLinks @ NavbarDefaultLinks) ]
+            [ Navbar.End.div [ ] ((NavbarPageLinks selectedPage) @ NavbarDefaultLinks) ]
 
     let StatusBar children =
-        Footer.footer
+        Hero.foot
             [
                 Modifiers    [
                     Modifier.BackgroundColor Color.IsBlackTer
@@ -112,26 +124,20 @@ module View =
         | NotificationText.Success text ->
             Notification.notification [ slimStyle;Notification.Color IsSuccess ] (content text)
 
+    let split (str:string) = str.Split
 
-    let inline refContainer (element : Browser.Types.Element) =
-        if not <| isNull element
-        then
-            element.classList.add("animated")
-            element.classList.add("fadeIn")
-
-    let view (model : Model) (dispatch : Msg -> unit) =
+    let view model dispatch =
         Hero.hero [ Hero.Color IsPrimary; Hero.IsFullHeight ]
             [ Hero.head [ ]
                 [ Navbar.navbar [ ]
                     [ Container.container [ ]
                         [ navBrand model.IsBurgerOpen dispatch
-                          navMenu model.IsBurgerOpen ] ] ]
+                          navMenu model.CurrentPage model.IsBurgerOpen ] ] ]
 
               Hero.body [ ]
                 [
                     Container.container
                         [
-                            //Container.Props [ Ref refContainer ] //; classList  ["animated",true;"fadeIn", true]]
                             Container.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
                         [
                             yield LoaderView model.BusyMessage
@@ -166,3 +172,48 @@ module View =
                     ]
                 ]
             ]
+
+    let view' (model : Model) (dispatch : Msg -> unit) =
+        div [ Class "is-main is-primary" ]
+            [   Navbar.navbar [ ]
+                    [ Container.container [ ]
+                        [ navBrand model.IsBurgerOpen dispatch
+                          navMenu model.CurrentPage model.IsBurgerOpen ] ]
+
+                Container.container
+                    [
+                        Container.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
+                    [
+                        yield LoaderView model.BusyMessage
+
+                        match model with
+                        | { CurrentPage = Router.Counter
+                            CounterModel = Some counterModel } ->
+                                yield YourNamespace.Counter.View.view counterModel (dispatch<<CounterMsg)
+
+                        | { CurrentPage = Router.LoadData _
+                            LoadDataModel = Some dataModel } ->
+                                yield YourNamespace.LoadData.View.root dataModel (dispatch<<LoadDataMsg)
+
+                        | { CurrentPage = Router.About
+                            HomeModel = Some homeModel } ->
+                                yield YourNamespace.Home.View.root homeModel (dispatch<<HomeMsg)
+                                //yield div [] [str "Here's Home!"]
+
+                        | _ -> //{ CurrentPage = Router.Missing(_) } ->
+                                yield PageNotFound
+                    ]
+
+
+                StatusBar [
+                  div
+                    [ Style [Display DisplayOptions.Flex] ]
+                      [
+                        div [Style [ FlexGrow 1; MarginRight 10 ] ]
+                            [ NotificationMessage model.Message dispatch ]
+
+                        SafeComponentLinks
+                    ]
+                ]
+            ]
+
