@@ -44,13 +44,8 @@ module View =
                                     if selectedPage = page then
                                         yield Style [ FontWeight "bold"; BorderBottom "solid #00B89C 2px"; PaddingBottom 5.]
 
-                                    yield OnClick(fun e ->
-                                        Router.modifyLocation page
-                                        //Dom.console.info("-----",e.target, e.currentTarget)
-                                        let el = e.currentTarget :?> Element
-                                        el.classList.add "is-outlined")
-
-                                ]]
+                                    yield OnClick(fun _ -> Router.modifyLocation page)
+                                ] ]
                           [ ofString title ] ]
 
     let NavbarPageLinks selectedPage =

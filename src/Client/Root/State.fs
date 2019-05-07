@@ -24,6 +24,13 @@ module State =
     let urlUpdate (result: Option<Page>) model =
         Dom.console.info(sprintf "[URL UPDATE] %A" result)
 
+        let collapsePageListCmd =
+            if model.IsBurgerOpen
+            then
+                Cmd.ofMsg <| ToggleBurger false
+            else
+                Cmd.none
+
         match result with
         | None ->
             let errMessage = window.location.href + " is not a valid url."
@@ -31,17 +38,10 @@ module State =
             Dom.console.error(errMessage)
 
             //{ model with Message = NotificationText.Warning errMessage }, Cmd.none//, modifyUrl model.CurrentPage
-            { model with CurrentPage = Missing(NotFound404) }, Cmd.none//, modifyUrl model.CurrentPage
+            { model with CurrentPage = Missing(NotFound404) }, collapsePageListCmd//, modifyUrl model.CurrentPage
 
         | Some page ->
             let model = { model with CurrentPage = page }
-
-            let collapsePageListCmd =
-                if model.IsBurgerOpen
-                then
-                    Cmd.ofMsg <| ToggleBurger false
-                else
-                    Cmd.none
 
             let (model', cmd) =
                 match page with
