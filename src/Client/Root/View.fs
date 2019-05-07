@@ -2,46 +2,13 @@ namespace YourNamespace.Root
 
 module View =
     open YourNamespace.Common.Types
-    open Fulma.Extensions.Wikiki
+    open YourNamespace.Common.View    
     open YourNamespace.Root.Types
     open YourNamespace.Common
     open Fulma
     open Fable.React
     open Fable.React.Props
-    open Fable.FontAwesome
-
-    let LoaderView (message : string option ) =
-        let inline loader isBusy =
-            PageLoader.pageLoader
-                [ PageLoader.IsActive isBusy
-                  PageLoader.Color IColor.IsBlack ]
-
-        match message with
-        | Some text ->
-                loader true
-                    [ Heading.h1 [] [str text ] ]
-        | None ->
-                loader false []
-
-
-    let PageNotFound =
-        div
-            [ ClassName "animated bounceIn" ]
-            [
-                Notification.notification
-                    [   Notification.Color IsDanger; ]
-                    [
-                        Heading.h1
-                            [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Left)]]
-                            [   str "4"
-                                Icon.icon [ Icon.Size IsLarge  ][ Fa.i [Fa.Regular.Compass; Fa.Spin] [] ]
-                                str "4" ]
-                        hr []
-                        Heading.h4
-                            [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Right)]]
-                            [ str "Page not found"]
-                    ]
-            ]
+    open Fable.FontAwesome    
 
     let SafeComponentLinks =
         p [ ]
@@ -183,7 +150,7 @@ module View =
                                     yield YourNamespace.Home.View.root homeModel (dispatch<<HomeMsg)
                                     //yield div [] [str "Here's Home!"]
 
-                            | { CurrentPage = Router.Missing(_) } ->
+                            | _ -> //{ CurrentPage = Router.Missing(_) } ->
                                     yield PageNotFound
                         ]
                 ]

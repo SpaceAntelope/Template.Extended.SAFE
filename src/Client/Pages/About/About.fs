@@ -33,17 +33,15 @@ module Data =
             let! text = response.text()
             return text
         } |> Promise.catch (fun ex -> ex.Message)
+
 module State =
     open Types
     open Fable.Core
 
-    let init() = { Data = "" }, Cmd.ofMsg LoadData
-
     [<Emit("marked($0)")>]
     let marked (text:string) : string = Util.jsNative
-
-    [<Emit("new FileReader()")>]
-    let getReader() : FileReader = Util.jsNative
+    
+    let init() = { Data = "" }, Cmd.ofMsg LoadData
 
     let update msg model =
         match msg with
@@ -64,27 +62,23 @@ module State =
         | UnexpectedError err ->
             model, Cmd.none, Cmd.ofMsg (YourNamespace.Common.Types.Msg.PromiseFailed err)
 
-
 module View =
     open Fable.React.Props
     open Fable.FontAwesome
 
-    [<Emit("marked($0)")>]
-    let marked (text:string) : string = Util.jsNative
-
     let root (model: Types.Model) dispatch =
         Column.column
           [ Column.Width (Screen.All, Column.Is8)
-            Column.Offset (Screen.All, Column.Is2) ]
+            Column.Offset (Screen.All, Column.Is2)
+            Column.Props [ YourNamespace.Common.View.AddAnimation "fadeIn" ]
+          ]
           [
-            //script [ Src "https://cdn.jsdelivr.net/npm/marked/marked.min.js" ] []
-
             Card.card [ Props [ Style [ BorderRadius 10] ] ]
                 [ Card.header [ ]
                     [ Card.Header.title [ ]
                         [ str "README.md" ]
-                      Card.Header.icon [ ]
-                        [ Fa.i [ Fa.Brand.Github ] [] ] // ClassName "fa fa-angle-down" ] [ ] ] ]
+                      Card.Header.icon [ ] 
+                        [ Fa.i [ Fa.Brand.Github ] [] ]
                     ]
                   Card.content
                     [
@@ -100,8 +94,9 @@ module View =
                               Ref (fun element ->
                                         if not (isNull element) && not (isNull model.Data)
                                         then
-                                            element.innerHTML <- marked model.Data
-                                             )
+                                            element.innerHTML <- model.Data
+                                            Dom.console.info("[Ref]",element.classList)
+                                            )
                             ] ]
                         [ ]
                     ]

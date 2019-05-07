@@ -1,12 +1,9 @@
 namespace YourNamespace.LoadData
 
 module Types =
-    open Elmish
-    open Shared
-    open YourNamespace.Common.Types
 
     type Model = {
-        IndexModel:  Index.Types.Model option
+        IndexModel: Index.Types.Model option
         ShowModel: Show.Types.Model option
     }
 
