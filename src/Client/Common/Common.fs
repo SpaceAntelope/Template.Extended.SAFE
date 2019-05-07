@@ -43,7 +43,7 @@ module View =
     open Fulma
     open Fable.React
     open Fable.React.Props
-    open Fable.FontAwesome    
+    open Fable.FontAwesome
     open Browser.Types
     open Browser
 
@@ -81,11 +81,16 @@ module View =
             ]
 
     let AddAnimation (animation: string) =
-        Ref (fun (element:Element) -> 
+        Ref (fun (element:Element) ->
             if not (isNull element)
             then
+                // element.addEventListener
+                //     ("animationend", (fun e ->
+                //         element.classList.remove "animated"
+                //         element.classList.remove animation
+                //     ) )
                 element.classList.add "animated"
-                element.classList.add animation
-                Dom.console.info("[Ref]",element.classList))
-                
-                
+                element.classList.add animation)
+                //Dom.console.info("[Ref]",element.classList))
+
+

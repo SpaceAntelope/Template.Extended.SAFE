@@ -10,14 +10,18 @@ module View =
     open Fulma
     open Types
 
-    [<Emit("twttr.widgets.load(document.getElementById(\"$0\"))")>]
-    let LoadTwitterWidgets elementId = Util.jsNative
+    [<Emit("if (twttr) twttr.widgets.load(document.getElementById($0))")>]
+    let LoadTwitterWidgets (elementId: string) : unit = Util.jsNative
 
     let embedded (item: RemoteData) =
         a [ ClassName item.ClassName
             Href item.EmbedReference
             Data ("theme", item.Theme)
-            Data ("height", 450) ]
+            Data ("height", 450)
+            Ref (fun element ->
+                if not (isNull element)
+                then LoadTwitterWidgets element.id
+            ) ]
           [  str (item.Name)]
 
     let root (model : Model) (dispatch : Msg -> unit) =
@@ -28,15 +32,15 @@ module View =
             [   match model.Data with
                 | Some data ->
                     yield embedded data
-                    yield script
-                        [   Defer true
-                            CharSet "utf-8"
-                            Src "https://platform.twitter.com/widgets.js"
-                            OnLoad (fun e ->
-                                Dom.window.alert("script loaded maby")
-                                Dom.console.info("Twitter script loaded?", e.target)
-                                LoadTwitterWidgets "TwitterContainer" ) ]
-                        []
+                    // yield script
+                    //     [   Defer true
+                    //         CharSet "utf-8"
+                    //         Src "https://platform.twitter.com/widgets.js"
+                    //         OnLoad (fun e ->
+                    //             Dom.window.alert("script loaded maby")
+                    //             Dom.console.info("Twitter script loaded?", e.target)
+                    //             LoadTwitterWidgets "TwitterContainer" ) ]
+                    //     []
                 | _ ->
                     yield div [] []
             ]

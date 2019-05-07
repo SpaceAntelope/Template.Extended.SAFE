@@ -2,10 +2,9 @@ namespace YourNamespace.Common
 
 
 module Router =
-    open Fable.Import
+    open Browser
     open Elmish.UrlParser
     open Elmish.Navigation
-    open Browser
     open Fable.React.Props
 
     type ErrorPage =

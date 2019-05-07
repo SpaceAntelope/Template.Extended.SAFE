@@ -21,8 +21,6 @@ module State =
             let (model, cmd, globalCmd) = Show.State.init itemId
             { defaultModel with ShowModel = Some model } , Cmd.map Types.ShowMsg cmd, globalCmd
 
-        // | 404?
-
     let update (msg : Msg) (model : Model) =
         match msg, model with
         | IndexMsg msg, { IndexModel = Some indexModel } ->
@@ -33,4 +31,4 @@ module State =
             let (model', cmd, globalCmd) = Show.State.update msg showModel
             { model with ShowModel = Some model'}, Cmd.map ShowMsg cmd, globalCmd
 
-        // | _ -> ??
+        | _ -> model, Cmd.none, Cmd.none
