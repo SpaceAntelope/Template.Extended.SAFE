@@ -1,6 +1,7 @@
 namespace YourNamespace.Root
 
 module View =
+    open Browser
     open Browser.Types
     open YourNamespace.Common.Types
     open YourNamespace.Common.View
@@ -121,6 +122,29 @@ module View =
 
     let split (str:string) = str.Split
 
+    let errorView (model: Model) (dispath : Msg -> Unit) =
+        Column.column
+            [   Column.Width (Screen.Desktop, Column.Is6)
+                Column.Width (Screen.Tablet, Column.Is6)
+                Column.Width (Screen.Mobile, Column.Is10)
+                Column.Offset (Screen.Desktop, Column.Is3)
+                Column.Offset (Screen.Tablet, Column.Is3)
+                Column.Offset (Screen.Mobile, Column.Is1)
+                ]
+            [
+              div
+                [ ClassName "animated bounceIn" ]
+                [
+                    Message.message [ Message.Color IsDanger ]
+                        [ Message.header [ ]
+                            [ str "React rendering appears to have imploded"
+                              Delete.delete [ ] [ ] ]
+                          Message.body [ ]
+                            [  str "We apologize for the inconvenience \u2764" ]
+                        ]
+                ]
+            ]
+
     let view model dispatch =
         Hero.hero [ Hero.Color IsPrimary; Hero.IsFullHeight ]
             [ Hero.head [ ]
@@ -137,22 +161,26 @@ module View =
                         [
                             yield LoaderView model.BusyMessage
 
-                            match model with
+                            yield match model with
                             | { CurrentPage = Router.Counter
                                 CounterModel = Some counterModel } ->
-                                    yield YourNamespace.Counter.View.view counterModel (dispatch<<CounterMsg)
+                                    YourNamespace.Counter.View.view counterModel (dispatch<<CounterMsg)
 
                             | { CurrentPage = Router.LoadData _
                                 LoadDataModel = Some dataModel } ->
-                                    yield YourNamespace.LoadData.View.root dataModel (dispatch<<LoadDataMsg)
+                                    YourNamespace.LoadData.View.root dataModel (dispatch<<LoadDataMsg)
 
                             | { CurrentPage = Router.About
-                                HomeModel = Some homeModel } ->
-                                    yield YourNamespace.Home.View.root homeModel (dispatch<<HomeMsg)
-                                    //yield div [] [str "Here's Home!"]
+                                AboutModel = Some homeModel } ->
+                                    YourNamespace.About.View.root homeModel (dispatch<<AboutMsg)
 
                             | _ -> //{ CurrentPage = Router.Missing(_) } ->
-                                    yield PageNotFound
+                                    PageNotFound
+                            |> YourNamespace.Common.ReactErrorBoundary.renderCatchFn
+                                    (fun (error, info) ->
+                                        Dom.console.error("SubComponent failed to render" + info.componentStack, error)
+                                        YourNamespace.Common.Types.Msg.ReactError(error,info) |> (GlobalMsg>>dispatch ))
+                                    (errorView model dispatch)
                         ]
                 ]
 
@@ -191,8 +219,8 @@ module View =
                                 yield YourNamespace.LoadData.View.root dataModel (dispatch<<LoadDataMsg)
 
                         | { CurrentPage = Router.About
-                            HomeModel = Some homeModel } ->
-                                yield YourNamespace.Home.View.root homeModel (dispatch<<HomeMsg)
+                            AboutModel = Some homeModel } ->
+                                yield YourNamespace.About.View.root homeModel (dispatch<<AboutMsg)
                                 //yield div [] [str "Here's Home!"]
 
                         | _ -> //{ CurrentPage = Router.Missing(_) } ->

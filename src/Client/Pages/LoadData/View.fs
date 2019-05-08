@@ -1,8 +1,12 @@
 namespace YourNamespace.LoadData
 
+
 module View =
+    open Browser
     open Fulma
     open Types
+    open Fable.React
+    open Fable.React.Props
 
     let root (model : Model) (dispatch : Msg -> unit) =
         Column.column

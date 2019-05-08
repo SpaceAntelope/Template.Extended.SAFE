@@ -14,6 +14,7 @@ module Types =
     | PromiseFailed of exn
     | Notify of NotificationText
     | ToggleBusy of message:string option
+    | ReactError of exn * ReactErrorBoundary.InfoComponentObject
 
 module TypeHelpers =
     open Types

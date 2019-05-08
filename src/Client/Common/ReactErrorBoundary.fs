@@ -7,14 +7,11 @@ module ReactErrorBoundary =
     type [<AllowNullLiteral>] InfoComponentObject =
         abstract componentStack: string with get
 
-    //[<Pojo>]
     type ErrorBoundaryProps =
         { Inner : ReactElement
           ErrorComponent : ReactElement
           OnError : exn * InfoComponentObject -> unit }
 
-    //[<Pojo>]
-    
     type ErrorBoundaryState =
         { HasErrors : bool }
 

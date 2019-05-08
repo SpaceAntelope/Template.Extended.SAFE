@@ -15,7 +15,7 @@ module State =
     let defaultModel = {
         CounterModel = None
         LoadDataModel = None
-        HomeModel = None
+        AboutModel = None
         BusyMessage = None
         Message = NotificationText.Info "Hello World! Here's a status message."
         CurrentPage = Counter
@@ -57,8 +57,8 @@ module State =
                             Cmd.map GlobalMsg globalCmd]
 
                 | About ->
-                    let (model', cmd) = YourNamespace.Home.State.init()
-                    { model with HomeModel = Some model'}, Cmd.map HomeMsg cmd
+                    let (model', cmd) = YourNamespace.About.State.init()
+                    { model with AboutModel = Some model'}, Cmd.map AboutMsg cmd
 
                 | _ -> model, Cmd.none
 
@@ -103,16 +103,16 @@ module State =
                         Cmd.map LoadDataMsg cmd
                         Cmd.map GlobalMsg globalCmd]
             | _ ->
-                Dom.console.error("Received msg", msg, "but SourceModel is None")
+                Dom.console.error("Received msg", msg, "but LoadDataModel is None")
                 model, Cmd.none
 
-        | HomeMsg homeMsg ->
-            match homeMsg, model.HomeModel with
+        | AboutMsg aboutMsg ->
+            match aboutMsg, model.AboutModel with
             | _, Some homeModel ->
-                let (model', cmd, globalCmd) = YourNamespace.Home.State.update homeMsg homeModel
-                { model with HomeModel = Some model'},
+                let (model', cmd, globalCmd) = YourNamespace.About.State.update aboutMsg homeModel
+                { model with AboutModel = Some model'},
                     Cmd.batch [
-                        Cmd.map HomeMsg cmd
+                        Cmd.map AboutMsg cmd
                         Cmd.map GlobalMsg globalCmd]
 
             | _ ->

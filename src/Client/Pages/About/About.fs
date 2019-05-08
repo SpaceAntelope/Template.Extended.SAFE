@@ -1,4 +1,4 @@
-namespace YourNamespace.Home
+namespace YourNamespace.About
 
 open Fable.Core
 open Browser.Types
