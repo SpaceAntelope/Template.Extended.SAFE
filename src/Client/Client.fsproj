@@ -6,6 +6,8 @@
     <Compile Include="../Shared/Shared.fs" />
     <Compile Include="Common/Router.fs" />
     <Compile Include="Common/Common.fs" />
+    <Compile Include="Common/ReactErrorBoundary.fs" />
+    <Compile Include="Common/ErrorComponent.fs" />
     <Compile Include="Pages/About/About.fs" />
     <Compile Include="Pages/Counter/Types.fs" />
     <Compile Include="Pages/Counter/Data.fs" />
