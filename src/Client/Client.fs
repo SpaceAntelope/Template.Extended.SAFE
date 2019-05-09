@@ -17,7 +17,7 @@ module Client =
     |> Program.toNavigable (parseHash Router.pageParser) Root.State.urlUpdate
     #if DEBUG
     |> Program.withConsoleTrace
-   // |> Program.withHMR
+    // |> Program.withHMR -- Don't worry, you still get HMR
     #endif
     |> Program.withReactBatched "elmish-app"
     #if DEBUG

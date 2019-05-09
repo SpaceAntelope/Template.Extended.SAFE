@@ -19,7 +19,8 @@ module State =
         BusyMessage = None
         Message = NotificationText.Info "Hello World! Here's a status message."
         CurrentPage = Counter
-        IsBurgerOpen = false }
+        IsBurgerOpen = false
+        ReactErrorInfo = None }
 
     let urlUpdate (result: Option<Page>) model =
         Dom.console.info(sprintf "[URL UPDATE] %A" result)
@@ -119,6 +120,8 @@ module State =
                 Dom.console.error("Received msg", msg, "but HomeModel is None")
                 model, Cmd.none
 
+        | ReactError (ex, info)  ->
+            { model with ReactErrorInfo = Some (ex, info) }, Cmd.none
 
         | ToggleBurger state ->
             { model with IsBurgerOpen = state }, Cmd.none

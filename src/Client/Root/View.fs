@@ -140,7 +140,35 @@ module View =
                             [ str "React rendering appears to have imploded"
                               Delete.delete [ ] [ ] ]
                           Message.body [ ]
-                            [  str "We apologize for the inconvenience \u2764" ]
+                            [   yield str "We apologize for the inconvenience \u2764"
+                                yield match model.ReactErrorInfo with
+                                | Some (ex, info) ->
+                                    div
+                                        [ Style [Display DisplayOptions.Flex]]
+                                        [
+                                            table [][
+                                                tbody[][
+
+                                                    tr[][
+                                                        td  [ Style[TextAlign TextAlignOptions.Right]]
+                                                            [ str "Message:" ]
+                                                        td [] [ str ex.Message ] ]
+
+                                                    // tr[][
+                                                    //     td[][ str "Source:"]
+                                                    //     td[][ str <| ex.Source] ]
+
+                                                    tr[][
+                                                        td[][]
+                                                        td[][ str ex.StackTrace ]
+                                                    ]
+                                                ]
+                                            ]
+                                            p [][str info.componentStack]
+                                        ]
+                                | None -> span[][]
+                            ]
+
                         ]
                 ]
             ]
@@ -178,8 +206,8 @@ module View =
                                     PageNotFound
                             |> YourNamespace.Common.ReactErrorBoundary.renderCatchFn
                                     (fun (error, info) ->
-                                        Dom.console.error("SubComponent failed to render" + info.componentStack, error)
-                                        YourNamespace.Common.Types.Msg.ReactError(error,info) |> (GlobalMsg>>dispatch ))
+                                        Dom.console.error("SubComponent failed to render", info, error)
+                                        dispatch <| ReactError(error,info))
                                     (errorView model dispatch)
                         ]
                 ]

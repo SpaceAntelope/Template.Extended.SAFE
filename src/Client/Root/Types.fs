@@ -3,6 +3,7 @@ namespace YourNamespace.Root
 module Types =
     open YourNamespace.Common.Types
     open YourNamespace.Common.Router
+    open YourNamespace.Common.ReactErrorBoundary
 
     type Model = {
           CounterModel: YourNamespace.Counter.Types.Model option
@@ -12,6 +13,7 @@ module Types =
           BusyMessage: string option
           CurrentPage: Page
           IsBurgerOpen: bool
+          ReactErrorInfo: (exn*InfoComponentObject) option
     }
 
     type Msg =
@@ -21,4 +23,5 @@ module Types =
     | LoadDataMsg of YourNamespace.LoadData.Types.Msg
     | ToggleBurger of state:bool
     | ClearNotification
+    | ReactError of exn * InfoComponentObject
 
