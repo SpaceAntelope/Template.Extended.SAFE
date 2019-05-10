@@ -13,4 +13,5 @@ group Client
     Fable.Fetch
     Fulma
     Fulma.Extensions.Wikiki.PageLoader
+    Fulma.Extensions.Wikiki.Divider
     Thoth.Json

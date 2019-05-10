@@ -32,6 +32,7 @@ group Client
     nuget Fable.Fetch
     nuget Fulma
     nuget Fulma.Extensions.Wikiki.PageLoader
+    nuget Fulma.Extensions.Wikiki.Divider
     nuget Fable.FontAwesome.Free
     nuget Thoth.Json
 

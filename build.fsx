@@ -61,11 +61,30 @@ Target.create "Clean" (fun _ ->
 )
 
 Target.create "InstallClient" (fun _ ->
+
+    """
+    -----------------------------------------------------------------
+    Steps to add a new dependency to client:
+    
+    * Delete file packet.lock
+    * Delete folder .fake
+    * Delete folder paket-files
+    * Add reference under the appropriate group at paket.dependencies
+    * Add same reference to src/Client/paket.dependencies
+    -----------------------------------------------------------------
+    """
+    |> printfn "%s"
+    
+    let yarnArguments =
+        if File.exists <| Path.combine __SOURCE_DIRECTORY__ "packet.lock"
+        then "install --frozen-lockfile"
+        else "install"
+
     printfn "Node version:"
     runTool nodeTool "--version" __SOURCE_DIRECTORY__
     printfn "Yarn version:"
     runTool yarnTool "--version" __SOURCE_DIRECTORY__
-    runTool yarnTool "install --frozen-lockfile" __SOURCE_DIRECTORY__
+    runTool yarnTool yarnArguments __SOURCE_DIRECTORY__
     runDotNet "restore" clientPath
 )
 

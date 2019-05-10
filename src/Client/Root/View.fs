@@ -1,4 +1,5 @@
 namespace YourNamespace.Root
+open Fulma
 
 module View =
     open Browser
@@ -8,6 +9,7 @@ module View =
     open YourNamespace.Root.Types
     open YourNamespace.Common
     open Fulma
+    open Fulma.Extensions.Wikiki
     open Fable.React
     open Fable.React.Props
     open Fable.FontAwesome
@@ -139,34 +141,41 @@ module View =
                         [ Message.header [ ]
                             [ str "React rendering appears to have imploded"
                               Delete.delete [ ] [ ] ]
-                          Message.body [ ]
-                            [   yield str "We apologize for the inconvenience \u2764"
+                          Message.body [ ] [
                                 yield match model.ReactErrorInfo with
-                                | Some (ex, info) ->
-                                    div
-                                        [ Style [Display DisplayOptions.Flex]]
-                                        [
-                                            table [][
-                                                tbody[][
+                                        | Some (ex, info) ->
+                                            div
+                                                [ Style [MaxHeight 500; Overflow "auto"]]
+                                                [   
+                                                    Heading.h4 [] [str "Message:"]
+                                                    Heading.h2 [] [ str ex.Message ]
+                                                    Heading.h4 [] [str "Details"]
+                                                    span   
+                                                        [ Style [TextAlign TextAlignOptions.Justify] ]
+                                                        [str info.componentStack]
+                                                    // table [][
+                                                    //     tbody[][
 
-                                                    tr[][
-                                                        td  [ Style[TextAlign TextAlignOptions.Right]]
-                                                            [ str "Message:" ]
-                                                        td [] [ str ex.Message ] ]
+                                                    //         tr[][
+                                                    //             td  [ Style[TextAlign TextAlignOptions.Right]]
+                                                    //                 [ str "Message:" ]
+                                                    //             td [] [ str ex.Message ] ]
 
-                                                    // tr[][
-                                                    //     td[][ str "Source:"]
-                                                    //     td[][ str <| ex.Source] ]
+                                                    //         // tr[][
+                                                    //         //     td[][ str "Source:"]
+                                                    //         //     td[][ str <| ex.Source] ]
 
-                                                    tr[][
-                                                        td[][]
-                                                        td[][ str ex.StackTrace ]
-                                                    ]
+                                                    //         tr[][
+                                                    //             td[][]
+                                                    //             td[][ str ex.StackTrace ]
+                                                    //         ]
+                                                    //     ]
+                                                    // ]
+                                                    // p [][str info.componentStack]
                                                 ]
-                                            ]
-                                            p [][str info.componentStack]
-                                        ]
-                                | None -> span[][]
+                                        | None -> span[][]
+                                //yield hr []//Divider.divider [Divider.Label "OR" ]
+                                yield str "We apologize for the inconvenience \u2764"
                             ]
 
                         ]
