@@ -37,7 +37,7 @@ module State =
                 >> Cmd.ofMsg
                 <| err
 
-            model, Cmd.none, Cmd.batch[cmd;Cmd.ofMsg NotBusyMsg]
+            model, Cmd.none, Cmd.batch [cmd;Cmd.ofMsg NotBusyMsg]
 
         | _ ->
             model, Cmd.none, Cmd.none

@@ -10,8 +10,8 @@ module View =
 
     let root (model : Model) (dispatch : Msg -> unit) =
         Column.column
-            [   //Column.Width (Screen.All, Column.Is6)
-                Column.Width (Screen.All, Column.IsNarrow) ]
+            [   Column.Width (Screen.All, Column.IsHalf) ]
+                //Column.Width (Screen.All, Column.IsNarrow)
             [   yield
                     match model.IndexModel, model.ShowModel with
                     | Some indexModel, _ ->

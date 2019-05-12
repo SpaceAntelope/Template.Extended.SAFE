@@ -5,15 +5,21 @@ module Types =
     open YourNamespace.Common.Router
     open YourNamespace.Common.ReactErrorBoundary
 
+    type ReactErrorModel = {
+        Exn: System.Exception
+        Info: InfoComponentObject
+        IsExpanded: bool
+    }
+
     type Model = {
           CounterModel: YourNamespace.Counter.Types.Model option
           LoadDataModel: YourNamespace.LoadData.Types.Model option
           AboutModel: YourNamespace.About.Types.Model option
+          ReactErrorModel : ReactErrorModel option
           Message: NotificationText
           BusyMessage: string option
           CurrentPage: Page
           IsBurgerOpen: bool
-          ReactErrorInfo: (exn*InfoComponentObject) option
     }
 
     type Msg =

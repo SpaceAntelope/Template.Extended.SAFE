@@ -69,7 +69,7 @@ module View =
     let root (model: Types.Model) dispatch =
         Column.column
           [ Column.Width (Screen.All, Column.Is8)
-            Column.Offset (Screen.All, Column.Is2)
+            //Column.Offset (Screen.All, Column.Is2)
             Column.Props [ YourNamespace.Common.View.AddAnimation "fadeIn" ]
           ]
           [

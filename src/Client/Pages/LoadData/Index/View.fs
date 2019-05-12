@@ -11,57 +11,45 @@ module View =
     open Types
 
     let inline Row(idx, name) =
-        tr []
-            [ td
-                []
-                [
-                    Button.a
-                        [
-                            Button.Option.IsFullWidth
-                            Button.Props [ href (Page.LoadData(Show idx)) ]
-                        ]
-                        [
-                            div
-                                [
-                                    Style [
-                                        Display DisplayOptions.Flex
-                                        AlignItems AlignItemsOptions.Center
-                                        Width "100%"
-                                    ]]
-                                [
-                                    span
-                                        []
-                                        [str name]
-                                    span [Style [FlexGrow 1.]][]
-                                    Fa.i
-                                        [ Fa.Brand.Twitter
-                                          Fa.Props [ Style [Color "#1DA1F2"] ] ]
-                                        []
+        tr [] [
+            td [] [
+                Button.a [
+                    Button.Option.IsFullWidth
+                    Button.Props [ href (Page.LoadData(Show idx)) ] ] [
+                        div [
+                            Style [
+                                Display DisplayOptions.Flex
+                                AlignItems AlignItemsOptions.Center
+                                Width "100%" ] ] [
+                                    span [] [ str name ]
+                                    span [ Style [ FlexGrow 1. ] ] []
+                                    Fa.i [
+                                        Fa.Brand.Twitter
+                                        Fa.Props [ Style [ Color "#1DA1F2" ] ] ] []
+                                    ]
                                 ]
-
+                            ]
                         ]
-                ]
-            ]
+
 
     let inline Table(items : IdxStr list) =
-        //div [ ClassName "animated fadeIn" ]
-        //    [
-                Table.table
-                    [   Table.IsHoverable
-                        Table.Props [Style [BorderRadius 15.]] ]
-                    [   thead []
-                            [ tr []
-                                 [ th [] [ str "Choose a timeline to expand" ] ] ]
-                        tbody [] (List.map Row items) ]
-        //    ]
+        Table.table [
+            Table.IsHoverable
+            Table.IsFullWidth
+            Table.Props [ Style [ BorderRadius 15. ] ] ] [
+                thead [] [
+                    tr [] [
+                        th [] [
+                            str "Choose a timeline to expand" ] ] ]
+                tbody [] (List.map Row items) ]
+
 
     let root (model : Model) (dispatch : Msg -> unit) =
         Column.column
-            [   //Column.Width (Screen.All, Column.Is6)
-                Column.Width (Screen.All, Column.IsNarrow) ]
-            [   match model.Data with
+            [] [
+            match model.Data with
                 | Some [] ->
-                    yield div [] [str "Data not available"]
+                    yield div [] [ str "Data not available" ]
                 | Some data ->
                     yield Table data
                 | None ->

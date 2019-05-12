@@ -20,7 +20,14 @@ module State =
         Message = NotificationText.Info "Hello World! Here's a status message."
         CurrentPage = Counter
         IsBurgerOpen = false
-        ReactErrorInfo = None }
+        ReactErrorModel = None }
+
+    let initErrorModel ex info =
+        {
+            Exn = ex
+            Info = info
+            IsExpanded = false
+        }
 
     let urlUpdate (result: Option<Page>) model =
         Dom.console.info(sprintf "[URL UPDATE] %A" result)
@@ -121,7 +128,7 @@ module State =
                 model, Cmd.none
 
         | ReactError (ex, info)  ->
-            { model with ReactErrorInfo = Some (ex, info) }, Cmd.none
+            { model with ReactErrorModel = Some (initErrorModel ex info) }, Cmd.none
 
         | ToggleBurger state ->
             { model with IsBurgerOpen = state }, Cmd.none

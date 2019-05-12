@@ -24,7 +24,7 @@ module ReactErrorBoundary =
         override x.componentDidCatch(error, info) =
             let info = info :?> InfoComponentObject
             x.props.OnError(error, info)
-            x.setState({ HasErrors = true })
+            x.setState(fun state props -> {state with HasErrors = true })
 
         override x.render() =
             if (x.state.HasErrors) then

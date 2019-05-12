@@ -11,7 +11,7 @@ module View =
     | { Counter = None   } -> "Loading..."
 
     let CounterBox (model : Model) (dispatch : Msg -> unit) =
-        Box.box' 
+        Box.box'
             [ ]
             [ Field.div [ Field.IsGrouped ]
                 [ Control.p [ Control.IsExpanded ]
@@ -29,11 +29,10 @@ module View =
                           Button.OnClick (fun _ -> dispatch Decrement) ]
                         [ str "-" ] ] ] ]
 
-    let view model dispatch =
+    let root model dispatch =
         Column.column
-            [ Column.Width (Screen.All, Column.Is6)
-              Column.Offset (Screen.All, Column.Is3) 
-              Column.Props [ YourNamespace.Common.View.AddAnimation "fadeIn" ] 
+            [ Column.Width (Screen.All, Column.IsHalf)
+              Column.Props [ YourNamespace.Common.View.AddAnimation "fadeIn" ]
             ]
             [ Heading.p
                 [ ] [ str "SAFE Template" ]

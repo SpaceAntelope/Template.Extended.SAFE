@@ -9,6 +9,7 @@ module View =
     open Fable.React.Props
     open Fulma
     open Types
+    open Fable.FontAwesome
 
     [<Emit("if (twttr) twttr.widgets.load(document.getElementById($0))")>]
     let LoadTwitterWidgets (elementId: string) : unit = Util.jsNative
@@ -20,27 +21,24 @@ module View =
             Data ("height", 450)
             Ref (fun element ->
                 if not (isNull element)
-                then LoadTwitterWidgets element.id
-            ) ]
-          [  str (item.Name)]
+                then
+                    LoadTwitterWidgets element.id
+            ) ] [
+                str (item.Name)
+                Fa.i [
+                    Fa.Props [ Style [ MarginLeft 10.] ]
+                    Fa.Solid.SyncAlt
+                    Fa.Spin ][]
+            ]
 
     let root (model : Model) (dispatch : Msg -> unit) =
-        Column.column
-            [   //Column.Width (Screen.All, Column.Is6)
-                Column.Props [ Id "TwitterContainer" ]
-                Column.Width (Screen.All, Column.IsNarrow) ]
-            [   match model.Data with
+        Column.column [
+            Column.Props [ Id "TwitterContainer" ]
+            Column.Width (Screen.All, Column.IsNarrow) ] [
+                match model.Data with
                 | Some data ->
                     yield embedded data
-                    // yield script
-                    //     [   Defer true
-                    //         CharSet "utf-8"
-                    //         Src "https://platform.twitter.com/widgets.js"
-                    //         OnLoad (fun e ->
-                    //             Dom.window.alert("script loaded maby")
-                    //             Dom.console.info("Twitter script loaded?", e.target)
-                    //             LoadTwitterWidgets "TwitterContainer" ) ]
-                    //     []
+
                 | _ ->
                     yield div [] []
             ]

@@ -14,7 +14,7 @@ module Controller =
     let indexAction (ctx : HttpContext) =
         task {
             // Dramatic pause
-            do! Task.Delay(2500)
+            do! Task.Delay(1000)
             // match (rnd.Next() % 4) with
             // | 0 ->
             //     return raise

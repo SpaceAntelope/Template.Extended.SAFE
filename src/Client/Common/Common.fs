@@ -61,26 +61,6 @@ module View =
         | None ->
                 loader false []
 
-
-    let PageNotFound =
-        div
-            [ ClassName "animated bounceIn" ]
-            [
-                Notification.notification
-                    [   Notification.Color IsDanger; ]
-                    [
-                        Heading.h1
-                            [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Left)]]
-                            [   str "4"
-                                Icon.icon [ Icon.Size IsLarge  ][ Fa.i [Fa.Regular.Compass; Fa.Spin] [] ]
-                                str "4" ]
-                        hr []
-                        Heading.h4
-                            [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Right)]]
-                            [ str "Page not found"]
-                    ]
-            ]
-
     let AddAnimation (animation: string) =
         Ref (fun (element:Element) ->
             if not (isNull element)
@@ -93,5 +73,31 @@ module View =
                 element.classList.add "animated"
                 element.classList.add animation)
                 //Dom.console.info("[Ref]",element.classList))
+
+
+    let PageNotFound =
+        Column.column
+            [ Column.Width (Screen.All, Column.Is10)
+              //Column.Offset (Screen.All, Column.Is1)
+              //Column.Props [ AddAnimation "bounceIn" ]
+            ]
+            [ Content.content
+                [ Content.Props [ AddAnimation "bounceIn" ] ]
+                [
+                    Notification.notification
+                        [   Notification.Color IsDanger; ]
+                        [
+                            Heading.h1
+                                [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Left)]]
+                                [   str "4"
+                                    Icon.icon [ Icon.Size IsLarge  ][ Fa.i [Fa.Regular.Compass; Fa.Spin] [] ]
+                                    str "4" ]
+                            hr []
+                            Heading.h4
+                                [ Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Right)]]
+                                [ str "Page not found"]
+                        ]
+                ]
+            ]
 
 
