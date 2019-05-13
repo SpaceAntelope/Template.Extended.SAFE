@@ -134,38 +134,39 @@ module View =
                 [   Column.Width (Screen.Desktop, Column.Is6)
                     Column.Width (Screen.Tablet, Column.Is6)
                     Column.Width (Screen.Mobile, Column.Is10)
-                    Column.Offset (Screen.Desktop, Column.Is3)
-                    Column.Offset (Screen.Tablet, Column.Is3)
-                    Column.Offset (Screen.Mobile, Column.Is1)
-                ]
-                [
-                    Card.card [ Props [ AddAnimation "bounceIn" ]]
-                        [ Card.header [ ]
-                            [ Card.Header.title [ ]
-                                [ str "React rendering appears to have imploded"]
-                              Card.Header.icon [ ]
-                                [   Delete.delete [ ] [ ]
-                                    i [ ClassName "fa fa-angle-down" ] [ ] ] ]
-                          Card.content [ ]
-                            [
-                                Content.content [ ]
-                                    [
+                ] [
+                    Card.card [
+                        Props [
+                            AddAnimation "bounceIn"
+                            Style [ BorderRadius 15]]] [
 
-                                    div
-                                        [ Style [MaxHeight 500; Overflow "auto"]]
-                                        [
-                                            Heading.h4 [] [str "Message:"]
-                                            Heading.h2 [] [ str errModel.Exn.Message ]
-                                            Heading.h4 [] [str "Details"]
-                                            span
-                                                [ Style [TextAlign TextAlignOptions.Justify] ]
-                                                [str errModel.Info.componentStack]
-                                        ]
+                        Card.header [ ] [
+                            Card.Header.title [ ] [
+                                str "React rendering appears to have imploded" ]
+                            Card.Header.icon [ ] [
+                                    Delete.delete [ ] [ ]
                                 ]
-                            ]
-                          Card.footer [ ]
-                            [ Card.Footer.a [ ]
-                                [str "We apologize for the inconvenience \u2764"] ] ]
+                            ]//i [ ClassName "fa fa-angle-down" ] [ ] ] ]
+
+                        Card.content [ ] [
+                                Content.content [ ] [
+                                    div [
+                                        Style [MaxHeight 500; Overflow "auto"; Color "#333"]] [
+                                        Heading.h4 [Heading.Modifiers[Modifier.TextColor IsBlack]] [str "Message:"]
+                                        Heading.h2 [Heading.Modifiers[Modifier.TextColor IsDanger]] [ str errModel.Exn.Message ]
+                                        Heading.h4 [Heading.Modifiers[Modifier.TextColor IsBlack]] [str "Details"]
+                                        span
+                                            [ Style [TextAlign TextAlignOptions.Justify] ]
+                                            [ str errModel.Info.componentStack ]
+                                        ]
+                                    ]
+                                ]
+
+                        Card.footer [ ] [
+                              Card.Footer.a [ ] [
+                                  str "We apologize for the inconvenience \u2764"]
+                        ]
+                    ]
                 ]
         // |> ignore
 
