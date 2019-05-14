@@ -33,7 +33,7 @@ module ReactErrorBoundary =
                 x.props.Inner
 
     let renderCatchSimple errorElement element =
-        ofType<ErrorBoundary,_,_> { Inner = element; ErrorComponent = errorElement; OnError = fun _ -> () } [ ]
+        ofType<ErrorBoundary,_,_> { Inner = element; ErrorComponent = errorElement; OnError = ignore } [ ]
 
     let renderCatchFn onError errorElement element =
         ofType<ErrorBoundary,_,_> { Inner = element; ErrorComponent = errorElement; OnError = onError } [ ]

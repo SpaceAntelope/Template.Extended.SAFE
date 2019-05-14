@@ -22,12 +22,17 @@ module Types =
           IsBurgerOpen: bool
     }
 
+    type ReactErrorMsg =
+    | ReactError of exn * InfoComponentObject
+    | IsReactErrorDetailsExpanded of bool
+
     type Msg =
     | GlobalMsg of YourNamespace.Common.Types.Msg
     | AboutMsg of YourNamespace.About.Types.Msg
     | CounterMsg of YourNamespace.Counter.Types.Msg
     | LoadDataMsg of YourNamespace.LoadData.Types.Msg
+    | ReactErrorMsg of ReactErrorMsg
     | ToggleBurger of state:bool
     | ClearNotification
-    | ReactError of exn * InfoComponentObject
+    | Reset
 

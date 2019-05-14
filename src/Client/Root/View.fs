@@ -123,9 +123,56 @@ module View =
         | NotificationText.Success text ->
             Notification.notification [ slimStyle; Notification.Color IsSuccess ] (content text)
 
-    let split (str : string) = str.Split
+    let textToLines (text:string) =
+        text.Split('\n')
+        |> List.ofArray
+        |> List.map (fun line -> div [] [str line])
 
-    let errorView (model : Model) (dispath : Msg -> Unit) =
+    let errorMessage errModel dispatch =
+        Message.message [
+            Message.Color IsDanger
+            Message.Props [
+                AddAnimation "bounceIn"]][
+                    Message.header [] [
+                        str "React rendering appears to have imploded"
+                        Delete.delete [ Delete.OnClick (fun e -> dispatch Reset)] [] ]
+
+                    Message.body [][
+                        yield Text.p [
+                                Modifiers [
+                                    Modifier.TextSize (Screen.All, TextSize.Is4)
+                                    Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ]] [
+                                    str errModel.Exn.Message ]
+
+                        yield Text.p [
+                            Props[OnClick (fun e -> dispatch<<ReactErrorMsg<<IsReactErrorDetailsExpanded <| not errModel.IsExpanded )]][
+                                a [] [
+                                    span [Style[Margin 5]][str "Details"]
+                                    Fa.i [
+                                        yield if not errModel.IsExpanded
+                                            then Fa.Solid.AngleDown
+                                            else Fa.Solid.AngleLeft][] ] ]
+
+                        if errModel.IsExpanded
+                        then
+                            yield Content.content [
+                                    Content.Modifiers [
+                                        Modifier.BackgroundColor Color.IsLight
+                                        Modifier.TextColor IsGreyDarker
+                                        Modifier.TextAlignment (Screen.All, TextAlignment.Left)]
+
+                                    Content.Props [
+                                        AddAnimation "fadeIn"
+                                        Style [
+                                            Padding 10
+                                            OverflowY "auto"
+                                            BoxShadow "5px 5px 8px #888888"
+                                            BorderRadius 5 ]]]
+                                            (textToLines errModel.Info.componentStack )
+                    ]
+                ]
+
+    let errorView (model : Model) (dispatch : Msg -> Unit) =
         match model.ReactErrorModel with
         | None -> div[][str "Oi! What!"]
         | Some errModel ->
@@ -135,113 +182,8 @@ module View =
                     Column.Width (Screen.Tablet, Column.Is6)
                     Column.Width (Screen.Mobile, Column.Is10)
                 ] [
-                    Card.card [
-                        Props [
-                            AddAnimation "bounceIn"
-                            Style [ BorderRadius 15]]] [
-
-                        Card.header [ ] [
-                            Card.Header.title [ ] [
-                                str "React rendering appears to have imploded" ]
-                            Card.Header.icon [ ] [
-                                    Delete.delete [ ] [ ]
-                                ]
-                            ]//i [ ClassName "fa fa-angle-down" ] [ ] ] ]
-
-                        Card.content [ ] [
-                                Content.content [ ] [
-                                    div [
-                                        Style [MaxHeight 500; Overflow "auto"; Color "#333"]] [
-                                        Heading.h4 [Heading.Modifiers[Modifier.TextColor IsBlack]] [str "Message:"]
-                                        Heading.h2 [Heading.Modifiers[Modifier.TextColor IsDanger]] [ str errModel.Exn.Message ]
-                                        Heading.h4 [Heading.Modifiers[Modifier.TextColor IsBlack]] [str "Details"]
-                                        span
-                                            [ Style [TextAlign TextAlignOptions.Justify] ]
-                                            [ str errModel.Info.componentStack ]
-                                        ]
-                                    ]
-                                ]
-
-                        Card.footer [ ] [
-                              Card.Footer.a [ ] [
-                                  str "We apologize for the inconvenience \u2764"]
-                        ]
-                    ]
+                    errorMessage errModel dispatch
                 ]
-        // |> ignore
-
-
-        // Column.column [
-        //         Column.Width(Screen.Desktop, Column.Is6)
-        //         Column.Width(Screen.Tablet, Column.Is6)
-        //         Column.Width(Screen.Mobile, Column.Is10)
-        //         // Column.Offset(Screen.Desktop, Column.Is3)
-        //         // Column.Offset(Screen.Tablet, Column.Is3)
-        //         // Column.Offset(Screen.Mobile, Column.Is1)
-        //         ]
-        //     [
-        //       div
-        //         [ AddAnimation "bounceIn" ]
-        //         [
-        //             Message.message [ Message.Color IsDanger ]
-        //                 [ Message.header
-        //                     []
-        //                     [ str "React rendering appears to have imploded"
-        //                       Delete.delete [] [] ]
-
-        //                   Message.body
-        //                     [ Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Justified) ] ]
-        //                     [
-        //                         yield match model.ReactErrorModel with
-        //                                 | Some errModel ->
-        //                                     Content.content
-        //                                         [ Content.Props [ Style [ MaxHeight 500; Overflow "auto" ] ] ]
-        //                                         [
-        //                                             strong [] [ str "Message:" ]
-        //                                             str errModel.Exn.Message
-        //                                             //strong [] [str "Details"]
-        //                                             Message.message
-        //                                                 [ Message.Color IsInfo ]
-        //                                                 [ Message.header []
-        //                                                     [ str "Details"
-        //                                                       Fa.i [ Fa.Solid.AngleLeft ] []
-        //                                                     ]
-        //                                                       //Delete.delete [ ]
-        //                                                   Message.body
-        //                                                     [ Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Justified) ] ]
-        //                                                     [ str errModel.Info.componentStack ]
-        //                                                 ]
-        //                                             str "We apologize for the inconvenience \u2764"
-        //                                         ]
-        //                                             // span
-        //                                             //     [ Style [TextAlign TextAlignOptions.Justify] ]
-        //                                             //     [str errModel.Info.componentStack]
-        //                                             // table [][
-        //                                             //     tbody[][
-
-        //                                             //         tr[][
-        //                                             //             td  [ Style[TextAlign TextAlignOptions.Right]]
-        //                                             //                 [ str "Message:" ]
-        //                                             //             td [] [ str ex.Message ] ]
-
-        //                                             //         // tr[][
-        //                                             //         //     td[][ str "Source:"]
-        //                                             //         //     td[][ str <| ex.Source] ]
-
-        //                                             //         tr[][
-        //                                             //             td[][]
-        //                                             //             td[][ str ex.StackTrace ]
-        //                                             //         ]
-        //                                             //     ]
-        //                                             // ]
-        //                                             // p [][str info.componentStack]
-
-        //                                 | None -> span [] []
-        //                         ] ] ] ] //yield hr []//Divider.divider [Divider.Label "OR" ]
-        //                         //yield str "We apologize for the inconvenience \u2764"
-
-
-
 
 
 
@@ -278,11 +220,13 @@ module View =
                                         YourNamespace.About.View.root homeModel (dispatch << AboutMsg)
 
                                 | _ -> //{ CurrentPage = Router.Missing(_) } ->
-                                                                                  PageNotFound
+                                    PageNotFound
+
                                 |> YourNamespace.Common.ReactErrorBoundary.renderCatchFn
                                         (fun (error, info) ->
                                             Dom.console.error ("SubComponent failed to render", info, error)
-                                            dispatch <| ReactError(error, info))
+                                            dispatch<<ReactErrorMsg<<ReactError <| (error, info)
+                                            )
                                         (errorView model dispatch)
                         ]
                     ]

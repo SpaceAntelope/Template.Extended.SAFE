@@ -127,13 +127,24 @@ module State =
                 Dom.console.error("Received msg", msg, "but HomeModel is None")
                 model, Cmd.none
 
-        | ReactError (ex, info)  ->
-            { model with ReactErrorModel = Some (initErrorModel ex info) }, Cmd.none
+
+        | ReactErrorMsg errorMsg ->
+            match model.ReactErrorModel, errorMsg with
+            | Some errorModel, IsReactErrorDetailsExpanded state ->
+                { model with ReactErrorModel = Some { errorModel with IsExpanded = state } }, Cmd.none
+
+            | _, ReactError (ex, info)  ->
+                { model with ReactErrorModel = Some (initErrorModel ex info) }, Cmd.none
+
+            | _ -> model, Cmd.none
 
         | ToggleBurger state ->
             { model with IsBurgerOpen = state }, Cmd.none
 
         | ClearNotification ->
             { model with Message = NotificationText.Empty }, Cmd.none
+
+        | Reset ->
+            init (Some model.CurrentPage)
 
 

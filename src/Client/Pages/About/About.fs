@@ -69,43 +69,36 @@ module View =
     let root (model: Types.Model) dispatch =
         Column.column
           [ Column.Width (Screen.All, Column.Is8)
-            //Column.Offset (Screen.All, Column.Is2)
-            Column.Props [ YourNamespace.Common.View.AddAnimation "fadeIn" ]
-          ]
-          [
-            Card.card [ Props [ Style [ BorderRadius 10] ] ]
-                [ Card.header [ ]
-                    [ Card.Header.title [ ]
-                        [ str "README.md" ]
-                      Card.Header.icon [ ]
-                        [ Fa.i [ Fa.Brand.Github ] [] ]
-                    ]
-                  Card.content
-                    [
-                        Modifiers
-                            [   Modifier.TextAlignment (Screen.All, TextAlignment.Justified)
-                                Modifier.IsPaddingless ]
-                    ]
-                    [ Content.content
-                        [
-                          Content.Modifiers [Modifier.BackgroundColor Color.IsLight]
-                          Content.Props
-                            [ Style [Height "80%"; MaxHeight 400.; Overflow "auto"; Padding 7.5 ]
-                              Ref (fun element ->
-                                        if not (isNull element) && not (isNull model.Data)
-                                        then
-                                            element.innerHTML <- model.Data
-                                            Dom.console.info("[Ref]",element.classList)
-                                            )
-                            ]
-                        ]
-                        [ ]
-                    ]
-                  Card.footer [ ]
-                    [ Card.Footer.a
-                        [ Props [Href "https://github.com/SpaceAntelope/Template.Extended.SAFE/blob/master/README.md" ] ]
-                        [ strong [ Style [Color IsLink] ] [ str "source" ] ]
+            Column.Props [ YourNamespace.Common.View.AddAnimation "fadeIn" ] ] [
+                Card.card [
+                    Props [ Style [ BorderRadius 10] ] ] [
+                        Card.header [ ]
+                            [ Card.Header.title [ ]
+                                [ str "README.md" ]
+                              Card.Header.icon [ ]
+                                [ Fa.i [ Fa.Brand.Github ] [] ] ]
 
+                        Card.content [
+                            Modifiers
+                                [   Modifier.TextAlignment (Screen.All, TextAlignment.Justified)
+                                    Modifier.IsPaddingless ] ] [
+                                    Content.content [
+                                        Content.Modifiers [Modifier.BackgroundColor Color.IsLight]
+                                        Content.Props [
+                                            Style [Height "80%"; MaxHeight 400.; Overflow "auto"; Padding 7.5 ]
+                                            Ref (fun element ->
+                                                        if not (isNull element) && not (isNull model.Data)
+                                                        then
+                                                            element.innerHTML <- model.Data
+                                                            Dom.console.info("[Ref]",element.classList)
+                                                            )] ]
+                                [ ]
+                            ]
+
+                        Card.footer [ ] [
+                            Card.Footer.a [
+                                Props [
+                                    Href "https://github.com/SpaceAntelope/Template.Extended.SAFE/blob/master/README.md" ] ]
+                                    [ strong [ Style [Color IsLink] ] [ str "source" ] ] ]
                         ]
-                ]
-          ]
+                  ]
