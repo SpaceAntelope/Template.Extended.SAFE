@@ -33,7 +33,9 @@ module ReactErrorBoundary =
                 x.props.Inner
 
     let renderCatchSimple errorElement element =
+        Browser.Dom.console.info("renderCatchSimple is called")
         ofType<ErrorBoundary,_,_> { Inner = element; ErrorComponent = errorElement; OnError = ignore } [ ]
 
     let renderCatchFn onError errorElement element =
+        Browser.Dom.console.info("renderCatchFn is called")
         ofType<ErrorBoundary,_,_> { Inner = element; ErrorComponent = errorElement; OnError = onError } [ ]

@@ -224,7 +224,7 @@ module View =
 
                                 |> YourNamespace.Common.ReactErrorBoundary.renderCatchFn
                                         (fun (error, info) ->
-                                            Dom.console.error ("SubComponent failed to render", info, error)
+                                            Dom.console.info ("SubComponent failed to render", info, error)
                                             dispatch<<ReactErrorMsg<<ReactError <| (error, info)
                                             )
                                         (errorView model dispatch)
