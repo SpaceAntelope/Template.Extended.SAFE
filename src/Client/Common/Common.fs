@@ -10,10 +10,15 @@ module Types =
     | Success of string
     | Empty
 
+    type ReactErrorMsg =
+        | Reload
+        | IsExpanded of bool
+
     type Msg =
     | PromiseFailed of exn
     | Notify of NotificationText
     | ToggleBusy of message:string option
+    | ErrorComponentMsg of ReactErrorMsg
     //| ReactError of exn * ReactErrorBoundary.InfoComponentObject
 
 module TypeHelpers =
@@ -65,15 +70,8 @@ module View =
         Ref (fun (element:Element) ->
             if not (isNull element)
             then
-                // element.addEventListener
-                //     ("animationend", (fun e ->
-                //         element.classList.remove "animated"
-                //         element.classList.remove animation
-                //     ) )
                 element.classList.add "animated"
                 element.classList.add animation)
-                //Dom.console.info("[Ref]",element.classList))
-
 
     let PageNotFound =
         Column.column
