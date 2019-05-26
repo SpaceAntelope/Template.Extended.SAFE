@@ -15,7 +15,6 @@ module ReactErrorBoundary =
     type ErrorBoundaryState =
         { HasErrors : bool }
 
-    // See https://github.com/MangelMaxime/Fulma/blob/master/docs/src/Widgets/Showcase.fs
     // See https://reactjs.org/docs/error-boundaries.html
     type ErrorBoundary(props) =
         inherit Component<ErrorBoundaryProps, ErrorBoundaryState>(props)
@@ -27,15 +26,14 @@ module ReactErrorBoundary =
             x.setState(fun state props -> {state with HasErrors = true })
 
         override x.render() =
+            Browser.Dom.console.log("Error boundary state:", x.state)
             if (x.state.HasErrors) then
                 x.props.ErrorComponent
             else
                 x.props.Inner
 
     let renderCatchSimple errorElement element =
-        Browser.Dom.console.info("renderCatchSimple is called")
         ofType<ErrorBoundary,_,_> { Inner = element; ErrorComponent = errorElement; OnError = ignore } [ ]
 
     let renderCatchFn onError errorElement element =
-        Browser.Dom.console.info("renderCatchFn is called")
         ofType<ErrorBoundary,_,_> { Inner = element; ErrorComponent = errorElement; OnError = onError } [ ]

@@ -142,7 +142,7 @@ module View =
                                 Modifiers [
                                     Modifier.TextSize (Screen.All, TextSize.Is4)
                                     Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ]] [
-                                    str errModel.Exn.Message ]
+                                    str <| errModel.Exn.Message.Replace(errModel.Info.componentStack,"") ]
 
                         yield Text.p [
                             Props[OnClick (fun e -> dispatch<<ReactErrorMsg<<IsReactErrorDetailsExpanded <| not errModel.IsExpanded )]][
@@ -225,8 +225,7 @@ module View =
                                 |> YourNamespace.Common.ReactErrorBoundary.renderCatchFn
                                         (fun (error, info) ->
                                             Dom.console.info ("SubComponent failed to render", info, error)
-                                            dispatch<<ReactErrorMsg<<ReactError <| (error, info)
-                                            )
+                                            dispatch<<ReactErrorMsg<<ReactError <| (error, info) )
                                         (errorView model dispatch)
                         ]
                     ]

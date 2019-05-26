@@ -9,5 +9,6 @@ module Types =
     type Msg =
         | Increment
         | Decrement
+        | Goto of int
         | InitialCountLoaded of Result<Counter, string>
         | GlobalMsg of YourNamespace.Common.Types.Msg

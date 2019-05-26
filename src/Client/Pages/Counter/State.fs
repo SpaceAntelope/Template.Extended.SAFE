@@ -29,6 +29,9 @@ module State =
                 { currentModel with Counter = Some { Value = counter.Value - 1 } }
             nextModel, Cmd.none
 
+        | Some counter, Goto index ->
+            { currentModel with Counter = Some { Value = index }},  Cmd.none
+
         | _, InitialCountLoaded(Ok initialCount) ->
             let nextModel = { currentModel with Counter = Some initialCount }
             nextModel, Cmd.none
