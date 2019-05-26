@@ -9,6 +9,7 @@ module View =
     open YourNamespace.Common
     open Fulma
     open Fulma.Extensions.Wikiki
+    open Fable.Core
     open Fable.React
     open Fable.React.Props
     open Fable.FontAwesome
@@ -172,18 +173,68 @@ module View =
                     ]
                 ]
 
-    let errorView (model : Model) (dispatch : Msg -> Unit) =
-        match model.ReactErrorModel with
-        | None -> div[][str "Oi! What!"]
-        | Some errModel ->
+    [<Emit("location.reload()")>]
+    let jsLocationReload() = Util.jsNative
 
-            Column.column
-                [   Column.Width (Screen.Desktop, Column.Is6)
-                    Column.Width (Screen.Tablet, Column.Is6)
-                    Column.Width (Screen.Mobile, Column.Is10)
-                ] [
-                    errorMessage errModel dispatch
-                ]
+    let errorView (model : Model) (dispatch : Msg -> Unit) =
+        Column.column
+            [   Column.Width (Screen.Desktop, Column.Is6)
+                Column.Width (Screen.Tablet, Column.Is6)
+                Column.Width (Screen.Mobile, Column.Is10) ] [
+
+                yield
+                    match model.ReactErrorModel with
+                    | None ->
+                        Box.box' [
+                            Props [AddAnimation "fadeIn"]
+                            Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Justified) ]] [
+                            Heading.h4 [Heading.Props [ Style [Color "tomato"]]][str "Oops..."]
+                            p[][
+                            //hr[]
+                            str "If you are seeing this, it means that while the page reset,
+                                 either the rendering inconsistency persists or the Error Boundary's
+                                 state.hasError could not be set to 'false'."]
+
+                            Container.container [ Container.IsFluid ] [
+                                Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered)] ] [
+                                    Button.button
+                                        [
+                                            Button.Color IsPrimary
+                                            Button.IsOutlined
+                                            Button.OnClick (fun e ->jsLocationReload())
+                                            ] [
+                                            str "Reload"
+                                            Fa.i [
+                                                Fa.Props[Style[MarginLeft 5]]
+                                                Fa.Solid.Sync
+                                            ][]
+                                        ]
+                                    ]
+                                ]
+                            br []
+                            div [
+                                Style [
+                                    TextAlign TextAlignOptions.Right
+                                    FontSize "small"]][
+                                strong [Style[Color "#BCBBBB"]][str "See also: "]
+
+                                a [ Href "https://stackoverflow.com/questions/48121750/browser-navigation-broken-by-use-of-react-error-boundaries"
+
+                                    Style [
+                                        Color "#F48024"
+                                        FontStyle "italic"
+                                        TextDecoration "underlined"]] [
+                                    str "Browser navigation broken by use of React Error Boundaries"
+
+                                    Fa.i [
+                                        Fa.Brand.StackOverflow
+                                        Fa.Size Fa.FaLarge
+                                        Fa.Props [ Style [ MarginLeft 5 ]]] []
+                            ]   ]   ]
+                    | Some errModel ->
+
+                            errorMessage errModel dispatch
+            ]
 
 
 
