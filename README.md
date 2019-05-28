@@ -3,19 +3,19 @@
   <img style="margin: 40px;" src="cookbook-notfound.png">
 </p>
 
-An implementation of the [SAFE Template](https://github.com/SAFE-Stack/SAFE-template) (with Fulma) extended to include SPA navigation, a responsive navbar, footer with status messages, a page loader functionality and even error boundaries.
+A sample project created with the [SAFE Template](https://github.com/SAFE-Stack/SAFE-template) (with Fulma) extended to include SPA navigation, a responsive navbar, footer with status messages, a page loader functionality and even error boundaries.
 
-This is obviously not meant as a replacement for the Template.SAFE, but rather to provide a useful point of reference for certain ubiquitous functionality that is not available out of the box and is seemingly not otherwise available in the same place.
+It's meant to provide a useful point of reference for certain ubiquitous UX functionality that is not available out of the box in the template, while hopefully making someone's life easier by keeping all such samples in one place.
 
 ## Updated Fable references
-This project uses the default SAFE.Template 1.0 output with the Fulma option as its basis, and is updated enought to be roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch, allowing for all the Core 3/React 5 bells and whistles.
+This project uses the default SAFE.Template 1.0 output with the Fulma option as its basis, and is updated enought to be roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch, meaning it allows for all the Core 3/React 5 bells and whistles.
 
 I did however keep the dependency versions open-ended, meaning that building the project after a dependency update might break it. Which is fine, since experimenting with new features and integrating breaking changes is part of the reason I made this in the first place.
 
 ## Navigation
-Leveraging [elmish-browser](https://elmish.github.io/browser/navigation.html) to use the content of the url bar as input to your application. This is meant to take care of giving access to the various parts and subparts of your SPA via url, while also updating browser history, thus enabling use of the browser back and forward buttons for navigation. Also implemented a graceful fallback message for bad urls.
+The samples leverage [elmish-browser](https://elmish.github.io/browser/navigation.html) in order to make the content of the browser's url bar available as input to your application. This means that you can use different url routes to access the various parts of your SPA application, while also updating browser history and thus enabling use of the browser back and forward buttons for navigation. Also implemented a graceful fallback message for bad urls.
 
-This also covers hashbang navigation, i.e. links that point at various places in your SPA.
+Hashbang navigation is also supported, i.e. http://localhost:8080/page#subsection type urls.
 
 TO DO: Guide to adding a new page
 
