@@ -1,14 +1,14 @@
 # Template.Extended.SAFE
-The SAFE Template (with Fulma) extended with updated Fable/React references and integrating navigation, responsive navbar, footer with status messages, a page loader functionality and even error boundaries.
-
-This is not meant as any sort of replacement for the Template.SAFE, rather to provide a useful point of reference for certain ubiquitous functionality that is not available out of the box and is seemingly not otherwise available in the same place.
-
 <p align="center">
-  <img src="cookbook-notfound.png">
+  <img style="margin: 40px;" src="cookbook-notfound.png">
 </p>
 
+An implementation of the [SAFE Template](https://github.com/SAFE-Stack/SAFE-template) (with Fulma) extended to include SPA navigation, a responsive navbar, footer with status messages, a page loader functionality and even error boundaries.
+
+This is obviously not meant as a replacement for the Template.SAFE, but rather to provide a useful point of reference for certain ubiquitous functionality that is not available out of the box and is seemingly not otherwise available in the same place.
+
 ## Updated Fable references
-This project used SAFE.Template 1.0 with the Fulma option as a basis, and is updated to be roughly equivalent roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch, allowing for all the Core 3/React 5 bells and whistles.
+This project uses the default SAFE.Template 1.0 output with the Fulma option as its basis, and is updated enought to be roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch, allowing for all the Core 3/React 5 bells and whistles.
 
 I did however keep the dependency versions open-ended, meaning that building the project after a dependency update might break it. Which is fine, since experimenting with new features and integrating breaking changes is part of the reason I made this in the first place.
 
