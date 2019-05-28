@@ -1,15 +1,15 @@
 # Template.Extended.SAFE
-The SAFE Template (with Fulma) extended with updated Fable/React references and integrating navigation, responsive navbar, footer with status messages and page loader functionality.
+The SAFE Template (with Fulma) extended with updated Fable/React references and integrating navigation, responsive navbar, footer with status messages, a page loader functionality and even error boundaries.
 
-This is not meant as a replacement for the Template.SAFE, rather to provide a useful point of reference for certain ubiquitous functionality that is not available out of the box and is seemingly not otherwise available in the same place. It might also be useful to some people as a stopgap until the official template is updated to use the new fable compiler.
+This is not meant as any sort of replacement for the Template.SAFE, rather to provide a useful point of reference for certain ubiquitous functionality that is not available out of the box and is seemingly not otherwise available in the same place.
 
 ## Updated Fable references
-Updated client references to fable-compiler 2.2 as per https://fable.io/blog/Announcing-2-2.html and fixed breaking changes, mainly by manually updating the paket references and webpack according to https://github.com/fable-compiler/webpack-config-template 
+I used SAFE.Template 1.0 with a --fulma layout as the basis of this project, which is roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch. Difference is that since I upgraded to Core 3/React 5 manually from SAFE 1.0 I kept the references open-ended, meaning that building the project after a dependency update might break it. Which is fine, since experimenting with new features and integrating breaking changes is part of the reason I made this.
 
 ## Navigation
-Use the url bar as input to your application, allowing you to directly navigate to a specific subsections of your Fable SPA, while updating browser history thus enabling use of the browser back and forward buttons for navigation. Also implemented a graceful fallback message for bad urls.
+How to use [elmish-browser](https://elmish.github.io/browser/navigation.html) to use the content of the url bar as input to your application. This is meant to take care of giving access to the various parts and subparts of your SPA via url, while also updating browser history, thus enabling use of the browser back and forward buttons for navigation. Also implemented a graceful fallback message for bad urls.
 
-This covers hashbang navigation, i.e. links that point at various places in your SPA.
+This also covers hashbang navigation, i.e. links that point at various places in your SPA.
 
 TO DO: Guide to adding a new page
 
@@ -17,26 +17,35 @@ TO DO: Guide to adding a new page
 Out of the box, the contents of the Bulma navigation bar simply disappeared on narrower viewports. I added the hamburger button and updated the MVU to allow for the expected responsive functionality.
 
 ## Footer
-A slim footer at the bottom of the root page that also works as a host for status notifications. 
+A slim footer at the bottom of the root page that also works as a host for status notifications. Back in the old days of SAFE.Template <= 1.0 we had to go looking how to implement Fulma  footers, this is a relic of those days (was that like three months ago?)
+
+Status notification available via global messages.
+
+**TO DO**: See if the notification functionality works better with [Thoth Toasts](https://mangelmaxime.github.io/Thoth/elmish/toast_docs.html)
 
 ## Page loader functionality
-The Fulma page loader needed some not immediately obvious steps (well to me anyway...) to get it to work, such as updating the .sass, available here for your convenience. 
+The Fulma page loader needed some not immediately obvious steps (well to me anyway...) to get it to work, such as updating the .scss file, available here for your convenience.
 
-The activity indicator is implemented as a globally available message, i.e. that can be called from any sub section of the SPA when it wants to block the interface and signal busy-ness by dispatching a _ToggleBusy of bool_ message.
+The activity indicator is here implemented as a globally available message, i.e. that can be called from any sub section of the SPA when it wants to block the interface and signal busy-ness by dispatching a _ToggleBusy of bool_ message.
 
 ## Sub page friendly structure
 A file tree geared towards an SPA sectioned along pages that appear as the content of a root page that itself implements any navigation, activity indicator, status messaging and other globally available functionality.
 
-The MVU pattern of each page is separated in Type/State/View files with an optional Data.fs, a pattern I saw in https://github.com/MangelMaxime/fulma-demo and which I am finding increasingly convenient, in both Fable and Fabulous. I also have this repo to thank for showing proper use of the bulma page loader in fulma. 
+The MVU pattern of each page is separated in Type/State/View files with an optional Data.fs, a pattern I saw in https://github.com/MangelMaxime/fulma-demo and which I am finding increasingly convenient, in both Fable and Fabulous. I also have this repo to thank for showing proper use of the bulma page loader in fulma.
 
-Note that the *fulma-demo* project also uses an updated version of the fable references, so if this repo doesn't end up working out for you as far as that aspect goes, I encourage you take a look there as well.
+# Error boundaries
+The classic MVU Counter sample is here rigged to explode if the counter reaches 45, leading to live example of how to use [React Error Boundaries](https://github.com/fable-compiler/fable-react/blob/master/docs/react-error-boundaries.md) in a Fable application.
+
+If you want to see error boundaries in action with a real bug, just press the back button after loading a twitter time line in the data page.
 
 ## Caveat emptor
 I have definitely not tested this template for production readiness, and very definitely not in a cloud or a container. Which is to say that while the fable-elmish code patterns should be good to go anywhere, I have so far not investigated what breaks and what works in the various deployment scenarios that the official template provides for, as far as referencial sturdiness and webpack packaging goes.
 
-Also, despite updating the template for access to the newer react features, I have absolutely not done any work towards actually using them for optimization. 
+As far as I can tell, all F# code should be completely OK to use on SAFE.Template 1.6
 
-Finally, you won't find anything here with regards to data access or dapper usage. 
+Also, even though the template supports the newer react features, I have absolutely not done any work towards actually using them for optimization.
+
+Finally, you won't find anything here with regards to data access or dapper usage.
 
 
 

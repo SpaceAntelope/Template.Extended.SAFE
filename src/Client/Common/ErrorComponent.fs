@@ -10,6 +10,10 @@ open Elmish
 
 module ErrorComponent =
 
+    (*
+     * Exploring how a component-independent error view might work, pretty much wip and experimentation at this point.
+     *)
+
     //type Model = ReactErrorBoundary.ErrorBoundaryProps
 
     // type Msg =
@@ -40,48 +44,56 @@ module ErrorComponent =
      * failed to fix the rendering issue and a page reload is necessary.
      * It is model agnostic and dispatches no messages.
      *)
-    let altView model (dispatch: Types.Msg -> unit) =
-        Box.box' [
-            Props [AddAnimation "fadeIn"]
-            Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Justified) ]] [
-            Heading.h4 [Heading.Props [ Style [Color "tomato"]]][str "Oops..."]
-            p[][
-            //hr[]
-            str "If you are seeing this, it means that while the page did reset,
-                 either the rendering inconsistency persists or the Error Boundary's
-                 state.hasError could not be set to 'false'."]
+    let errorFallback () =
+            Box.box' [
+                Props [AddAnimation "fadeIn"]
+                Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Justified) ]] [
+                Heading.h4 [Heading.Props [ Style [Color "tomato"]]][str "Oops..."]
+                p[][
+                //hr[]
+                str "If you are seeing this, it means that while the page reset,
+                     either the rendering inconsistency persists or the Error Boundary's
+                     state.hasError could not be set to 'false'."]
 
-            Container.container [ Container.IsFluid ] [
-                Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered)] ] [
-                    Button.button
-                        [   Button.Color IsPrimary
-                            Button.IsOutlined
-                            Button.OnClick (fun e ->jsLocationReload()) ] [
-                            str "Reload"
-                            Fa.i [
-                                Fa.Props[Style[MarginLeft 5]]
-                                Fa.Solid.Sync ][]
-                ] ] ]
-            br []
-            div [ Style [
-                    TextAlign TextAlignOptions.Right
-                    FontSize "small"]][
-
-                strong [Style[Color "#BCBBBB"]][str "See also: "]
-
-                a [ Href "https://stackoverflow.com/questions/48121750/browser-navigation-broken-by-use-of-react-error-boundaries"
-
+                Container.container [ Container.IsFluid ] [
+                    Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered)] ] [
+                        Button.button
+                            [
+                                Button.Color IsPrimary
+                                Button.IsOutlined
+                                Button.OnClick (fun e ->jsLocationReload())
+                                ] [
+                                str "Reload"
+                                Fa.i [
+                                    Fa.Props[Style[MarginLeft 5]]
+                                    Fa.Solid.Sync
+                                ][]
+                            ]
+                        ]
+                    ]
+                br []
+                div [
                     Style [
-                        Color "#F48024"
-                        FontStyle "italic"
-                        TextDecoration "underlined"]] [
-                    str "Browser navigation broken by use of React Error Boundaries"
+                        TextAlign TextAlignOptions.Right
+                        FontSize "small"]][
+                    strong [Style[Color "#BCBBBB"]][str "See also: "]
 
-                    Fa.i [
-                        Fa.Brand.StackOverflow
-                        Fa.Size Fa.FaLarge
-                        Fa.Props [ Style [ MarginLeft 5 ]]] []
-            ]   ]   ]
+                    a [ Href "https://stackoverflow.com/questions/48121750/browser-navigation-broken-by-use-of-react-error-boundaries"
+
+                        Style [
+                            Color "#F48024"
+                            FontStyle "italic"
+                            TextDecoration "underlined"]] [
+
+                        str "Browser navigation broken by use of React Error Boundaries"
+
+                        Fa.i [
+                            Fa.Brand.StackOverflow
+                            Fa.Size Fa.FaLarge
+                            Fa.Props [ Style [ MarginLeft 5 ]]] []
+                ]   ]   ]
+
+
 
     let view model (dispatch: Types.Msg -> unit) =
         let reloadMsg =
