@@ -9,7 +9,7 @@ This project used SAFE.Template 1.0 with the Fulma option as a basis, and is upd
 I did however keep the dependency versions open-ended, meaning that building the project after a dependency update might break it. Which is fine, since experimenting with new features and integrating breaking changes is part of the reason I made this in the first place.
 
 ## Navigation
-How to use [elmish-browser](https://elmish.github.io/browser/navigation.html) to use the content of the url bar as input to your application. This is meant to take care of giving access to the various parts and subparts of your SPA via url, while also updating browser history, thus enabling use of the browser back and forward buttons for navigation. Also implemented a graceful fallback message for bad urls.
+Leveraging [elmish-browser](https://elmish.github.io/browser/navigation.html) to use the content of the url bar as input to your application. This is meant to take care of giving access to the various parts and subparts of your SPA via url, while also updating browser history, thus enabling use of the browser back and forward buttons for navigation. Also implemented a graceful fallback message for bad urls.
 
 This also covers hashbang navigation, i.e. links that point at various places in your SPA.
 

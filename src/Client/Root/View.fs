@@ -181,7 +181,7 @@ module View =
                 Props [AddAnimation "fadeIn"]
                 Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Justified) ]] [
                 Heading.h4 [Heading.Props [ Style [Color "tomato"]]][str "Oops..."]
-                p[][
+                p[Style[MarginBottom 10]][
                 //hr[]
                 str "If you are seeing this, it means that while the page reset,
                      either the rendering inconsistency persists or the Error Boundary's
@@ -237,7 +237,6 @@ module View =
                     | None ->
                             errorFallback()
                     | Some errModel ->
-
                             errorMessage errModel dispatch
             ]
 
