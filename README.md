@@ -4,7 +4,9 @@ The SAFE Template (with Fulma) extended with updated Fable/React references and 
 This is not meant as any sort of replacement for the Template.SAFE, rather to provide a useful point of reference for certain ubiquitous functionality that is not available out of the box and is seemingly not otherwise available in the same place.
 
 ## Updated Fable references
-I used SAFE.Template 1.0 with a --fulma layout as the basis of this project, which is roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch. Difference is that since I upgraded to Core 3/React 5 manually from SAFE 1.0 I kept the references open-ended, meaning that building the project after a dependency update might break it. Which is fine, since experimenting with new features and integrating breaking changes is part of the reason I made this.
+This project used SAFE.Template 1.0 with the Fulma option as a basis, and is updated to be roughly equivalent roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch, allowing for all the Core 3/React 5 bells and whistles.
+
+I did however keep the dependency versions open-ended, meaning that building the project after a dependency update might break it. Which is fine, since experimenting with new features and integrating breaking changes is part of the reason I made this in the first place.
 
 ## Navigation
 How to use [elmish-browser](https://elmish.github.io/browser/navigation.html) to use the content of the url bar as input to your application. This is meant to take care of giving access to the various parts and subparts of your SPA via url, while also updating browser history, thus enabling use of the browser back and forward buttons for navigation. Also implemented a graceful fallback message for bad urls.
