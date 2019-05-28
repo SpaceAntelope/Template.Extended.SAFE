@@ -47,11 +47,6 @@ If you want to see error boundaries in action with a real bug, just press the ba
 ## Caveat emptor
 I have definitely not tested this template for production readiness, and very definitely not in a cloud or a container. Which is to say that while the fable-elmish code patterns should be good to go anywhere, I have so far not investigated what breaks and what works in the various deployment scenarios that the official template provides for, as far as referencial sturdiness and webpack packaging goes.
 
-As far as I can tell, all F# code should be completely OK to use on SAFE.Template 1.6
-
 Also, even though the template supports the newer react features, I have absolutely not done any work towards actually using them for optimization.
 
-Finally, you won't find anything here with regards to data access or dapper usage.
-
-
-
+Finally, you won't find anything here with regards to data access or dapper usage as the project is decisively front-end oriented.
