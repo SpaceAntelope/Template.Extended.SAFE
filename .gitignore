@@ -1,6 +1,7 @@
 .fable/
 .fake/
 .vs/
+.vscode/
 obj/
 bin/
 packages/
