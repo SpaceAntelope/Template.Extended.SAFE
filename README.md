@@ -49,4 +49,4 @@ I have definitely not tested this template for production readiness, and very de
 
 Also, even though the template supports the newer react features, I have absolutely not done any work towards actually using them for optimization.
 
-Finally, you won't find anything here with regards to data access or dapper usage as the project is decisively front-end oriented.
+Finally, you won't find anything here with regards to data access or dapper usage as the project is currently decisively front-end oriented.
