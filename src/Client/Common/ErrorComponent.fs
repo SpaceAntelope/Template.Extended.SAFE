@@ -6,6 +6,7 @@ open ReactErrorBoundary
 open YourNamespace.Common.View
 open Fable.FontAwesome
 open Fable.Core
+open Elmish
 
 module ErrorComponent =
 
@@ -28,6 +29,10 @@ module ErrorComponent =
         text.Split('\n')
         |> List.ofArray
         |> List.map (fun line -> div [] [str line])
+
+    let update msg model = //(msg : Common.Msg) (model : Model) : Model * Cmd<Msg> =
+        Browser.Dom.console.info("[ERROR COMPONENT]", sprintf "%A" msg)
+        model, Cmd.ofMsg (Types.ErrorComponentMsg msg)
 
 
     (*
