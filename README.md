@@ -5,7 +5,7 @@
 
 A sample project created with the [SAFE Template](https://github.com/SAFE-Stack/SAFE-template) (with Fulma) extended to include SPA navigation, a responsive navbar, footer with status messages, a page loader functionality and even error boundaries.
 
-It's meant to provide a useful point of reference for certain ubiquitous UX functionality that is not available out of the box in the template, while hopefully making someone's life easier by keeping all such samples in one place.
+It's meant to provide a useful point of reference for certain ubiquitous UX functionality that is not available out of the box in the template, while hopefully making someone's life easier by presenting all such samples in one place.
 
 ## Updated Fable references
 This project uses the default SAFE.Template 1.0 output with the Fulma option as its basis, and is updated enought to be roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch, meaning it allows for all the Core 3/React 5 bells and whistles.
