@@ -3,6 +3,10 @@ The SAFE Template (with Fulma) extended with updated Fable/React references and 
 
 This is not meant as any sort of replacement for the Template.SAFE, rather to provide a useful point of reference for certain ubiquitous functionality that is not available out of the box and is seemingly not otherwise available in the same place.
 
+<p align="center">
+  <img src="cookbook-notfound.png">
+</p>
+
 ## Updated Fable references
 This project used SAFE.Template 1.0 with the Fulma option as a basis, and is updated to be roughly equivalent roughly equivalent with current (28/5/19) 1.6 SAFE.Template with the _--layout fulma-landing_ switch, allowing for all the Core 3/React 5 bells and whistles.
 
