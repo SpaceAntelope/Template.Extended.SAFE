@@ -35,8 +35,8 @@ A file tree geared towards an SPA sectioned along pages that appear as the conte
 
 The MVU pattern of each page is separated in Type/State/View files with an optional Data.fs, a pattern I saw in https://github.com/MangelMaxime/fulma-demo and which I am finding increasingly convenient, in both Fable and Fabulous. I also have this repo to thank for showing proper use of the bulma page loader in fulma.
 
-# Error boundaries
-The classic MVU Counter sample is here rigged to explode if the counter reaches 45, leading to live example of how to use [React Error Boundaries](https://github.com/fable-compiler/fable-react/blob/master/docs/react-error-boundaries.md) in a Fable application.
+## Error boundaries
+The classic MVU Counter sample is here rigged to explode if the counter reaches 45, leading to a live example of how to use [React Error Boundaries](https://github.com/fable-compiler/fable-react/blob/master/docs/react-error-boundaries.md) in a Fable application.
 
 If you want to see error boundaries in action with a real bug, just press the back button after loading a twitter time line in the data page.
 
