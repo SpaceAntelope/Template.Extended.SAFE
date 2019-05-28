@@ -18,8 +18,8 @@ module View =
         p []
             [ str "A "
               a [ Href "https://safe-stack.github.io/" ]
-                [ strong [] [ str "SAFE Template" ] ]
-              str " extended by "
+                [ strong [] [ str "Fable Cookbook" ] ]
+              str " by "
               a [ Href "https://areslazarus.com" ] [ str "Ares Lazarus" ] ]
 
     let navBrand isBurgerOpen dispatch =
