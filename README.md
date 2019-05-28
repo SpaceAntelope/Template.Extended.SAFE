@@ -3,7 +3,7 @@
   <img style="margin: 40px;" src="cookbook-notfound.png">
 </p>
 
-A sample project created with the [SAFE Template](https://github.com/SAFE-Stack/SAFE-template) (with Fulma) extended to include SPA navigation, a responsive navbar, footer with status messages, a page loader functionality and even error boundaries.
+A sample project created with the [SAFE Template](https://github.com/SAFE-Stack/SAFE-template) (with Fulma) extended to include SPA navigation, a responsive navbar, footer with status messages, a page loader functionality and error boundaries.
 
 It's meant to provide a useful point of reference for certain ubiquitous UX functionality that is not available out of the box in the template, while hopefully making someone's life easier by presenting all such samples in one place.
 
